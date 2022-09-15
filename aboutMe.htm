@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <script language="JavaScript">
+    top.window.moveTo(0, 0);
+    if (document.all) {
+      top.window.resizeTo(screen.availWidth, screen.availHeight);
+    } else if (document.layers || document.getElementById) {
+      if (
+        top.window.outerHeight < screen.availHeight ||
+        top.window.outerWidth < screen.availWidth
+      ) {
+        top.window.outerHeight = screen.availHeight;
+        top.window.outerWidth = screen.availWidth;
+      }
+    }
+  </script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="Malhart,毛孩,Malhart栖息地" />
+    <meta
+      name="description"
+      content="一个无聊的学生受康文昌老师指引教导制成的小网站"
+    />
+    <title>你 被 骗 了</title>
+  </head>
+  <body>
+    <video
+      autoplay="autoplay"
+      loop="loop"
+      id="Never Gonna Give You Up~"
+      src="https://vdse.bdstatic.com/192d9a98d782d9c74c96f09db9378d93.mp4"
+      width="852"
+      height="480"
+      controls="controls"
+    >
+      <source
+        src="https://vdse.bdstatic.com/192d9a98d782d9c74c96f09db9378d93.mp4"
+        type="video/mp4"
+      />
+      <object
+        data="https://vdse.bdstatic.com/192d9a98d782d9c74c96f09db9378d93.mp4"
+        width="852"
+        height="480"
+      ></object>
+    </video>
+  </body>
+</html>
