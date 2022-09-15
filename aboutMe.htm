@@ -1,19 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-Hans">
-  <script language="JavaScript">
-    top.window.moveTo(0, 0);
-    if (document.all) {
-      top.window.resizeTo(screen.availWidth, screen.availHeight);
-    } else if (document.layers || document.getElementById) {
-      if (
-        top.window.outerHeight < screen.availHeight ||
-        top.window.outerWidth < screen.availWidth
-      ) {
-        top.window.outerHeight = screen.availHeight;
-        top.window.outerWidth = screen.availWidth;
-      }
-    }
-  </script>
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -29,21 +15,25 @@
     <video
       autoplay="autoplay"
       loop="loop"
-      id="Never Gonna Give You Up~"
-      src="https://vdse.bdstatic.com/192d9a98d782d9c74c96f09db9378d93.mp4"
-      width="852"
-      height="480"
+      width="100%"
+      height="56.338%"
       controls="controls"
     >
       <source
         src="https://vdse.bdstatic.com/192d9a98d782d9c74c96f09db9378d93.mp4"
         type="video/mp4"
       />
-      <object
-        data="https://vdse.bdstatic.com/192d9a98d782d9c74c96f09db9378d93.mp4"
-        width="852"
-        height="480"
-      ></object>
     </video>
+    <div style="margin: auto; font-size: 30px; text-align: center">
+      <p><b>狗头保命</b></p>
+      <img
+        img="doge"
+        src="https://s1.328888.xyz/2022/08/29/CIP7B.jpg"
+        alt="doge"
+        width="256px"
+        height="256px"
+        style="margin-top: 16px"
+      />
+    </div>
   </body>
 </html>
