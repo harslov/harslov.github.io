@@ -56,12 +56,38 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             flex-grow: 1;
         }
+        .content .block-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .content .block {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .content .block img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
         .footer {
             background-color: #333;
             color: white;
-            padding: 10px;
+            padding: 20px;
             text-align: center;
-            font-size: 14px;
+            font-size: 18px;
+        }
+        .footer a {
+            color: #d4d4d4; 
+            font-size: 18px;
+        }
+        .footer a:hover {
+            color: white;
+        }
+        .content h1, .content p {
+            font-size: 24px; 
         }
     </style>
 </head>
@@ -77,11 +103,22 @@
 </nav>
 
 <div class="content">
-    <h1>招租！</h1>
-    <p>有意者请联系：<a href="mailto:960209832@qq.com">960209832@qq.com</a></p>
+    <div class="block-container">
+        <div class="block">
+            <p>10年1班落配元：<br>我喜欢斧乃木余接</p>
+            <img src="https://img.dexbug.com/i/2025/02/26/cfv2io.jpg" alt="图片">
+        </div>
+        <div class="block">
+            <p>No.2</p>
+        </div>
+        <div class="block">
+            <p>No.3</p>
+        </div>
+    </div>
 </div>
 
 <div class="footer">
+    <p>招租！<br>有意者请联系：<a href="mailto:960209832@qq.com">960209832@qq.com</a></p>
     <p>© 2025 卫红易666 | All Rights Reserved</p>
 </div>
 
