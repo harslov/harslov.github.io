@@ -9,37 +9,74 @@
             margin: 0;
             padding: 0;
             height: 100%;
+            font-family: Arial, sans-serif;
         }
-        video {
-            position: absolute;
+
+        /* 顶栏样式 */
+        .top-bar {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: 50px;
+            background-color: #333;
+            color: white;
+            text-align: left;
+            line-height: 50px;
+            padding-left: 20px;
+            z-index: 10;
         }
+
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* 底栏样式 */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            z-index: 10;
+        }
+
+        /* 视频样式 */
+        video {
+            position: absolute;
+            top: 50px; /* 顶栏下方 */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 100px); /* 底栏上方 */
+            object-fit: cover;
+            z-index: 1;
+        }
+
     </style>
 </head>
 <body>
-    <video id="videoPlayer" autoplay muted>
+
+    <!-- 顶栏 -->
+    <div class="top-bar">
+        <a href="https://harslov.github.io">主页面</a>
+    </div>
+
+    <!-- 视频播放 -->
+    <video id="videoPlayer" autoplay muted controls>
         <source src="https://vdse.bdstatic.com/192d9a98d782d9c74c96f09db9378d93.mp4" type="video/mp4">
         您的浏览器不支持视频播放。
     </video>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var video = document.getElementById('videoPlayer');
-            video.play();
-            // 尝试进入全屏模式
-            if (video.requestFullscreen) {
-                video.requestFullscreen();
-            } else if (video.mozRequestFullScreen) { // Firefox
-                video.mozRequestFullScreen();
-            } else if (video.webkitRequestFullscreen) { // Chrome, Safari 和 Opera
-                video.webkitRequestFullscreen();
-            } else if (video.msRequestFullscreen) { // IE/Edge
-                video.msRequestFullscreen();
-            }
-        });
-    </script>
+
+    <!-- 底栏 -->
+    <div class="bottom-bar">
+        版权所有 © 2025 卫红易666
+    </div>
+
 </body>
 </html>
