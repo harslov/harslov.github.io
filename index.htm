@@ -15,11 +15,12 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            position: relative;
         }
         header {
             background-color: #4CAF50;
             padding: 20px;
-            color: white;
+            color: #ffffff;
             font-size: 36px;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
@@ -38,7 +39,7 @@
             padding: 14px 20px;
         }
         nav ul li a {
-            color: white;
+            color: #ffffff;
             text-decoration: none;
             font-size: 18px;
             font-weight: bold;
@@ -50,8 +51,8 @@
         .content {
             margin: 20px auto;
             padding: 20px;
-            background-color: white;
-            width: 80%;
+            background-color: #ffffff;
+            width: 50%;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             flex-grow: 1;
@@ -62,16 +63,33 @@
             border-radius: 8px;
             margin: 20px 0;
         }
-
-        .content a {
-            display: block;
-        }
         .footer {
             background-color: #333;
             color: white;
             padding: 10px;
             text-align: center;
             font-size: 14px;
+        }
+        .quote-box {
+            position: absolute;
+            left: 25px;
+            top: 165px;
+            width: 300px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .hidden-box {
+            position: fixed;
+            right: 20px; /* 右侧 */
+            top: 50%; /* 垂直居中 */
+            width: 100px;
+            height: 100px;
+            background-color: transparent;
+            cursor: pointer;
+            z-index: 1000; /* 保证它在最上层 */
         }
     </style>
 </head>
@@ -87,6 +105,8 @@
     </ul>
 </nav>
 
+<div class="quote-box" id="quoteBox"></div>
+
 <div class="content">
     <h1>惊天大瓜</h1>
     <h2><a id="randomName" href="http://cornhub.website" target="_blank"></a></h2>
@@ -98,6 +118,10 @@
         <img src="https://img.dexbug.com/i/2025/02/25/ioavgc.png" alt="Bot">
     </a>
 </div>
+
+
+<div class="hidden-box" onclick="window.location.href='superidol.html';"></div>
+
 <script>
     const whi = ["卫", "魏", "为", "位", "伪"];
     const hongVariations = ["鸿", "宏", "泓", "虹", "弘", "红", "轰"];
@@ -106,11 +130,24 @@
     const randomHong1 = hongVariations[Math.floor(Math.random() * hongVariations.length)];
     const randomYi1 = yiVariations[Math.floor(Math.random() * yiVariations.length)];
     document.getElementById("randomName").textContent = `我是${wh3i}${randomHong1}${randomYi1}`;
+
+    const quotes = [
+        "得了便宜还卖乖",
+        "人机",
+        "能出我吃",
+        "我已经看见绿宝石在向我招手",
+        "对面刷ez我就开挂",
+        "唐完了",
+        "我艹XX(一个老师)在后面",
+        "菜就多练",
+        "来来来，来单挑"
+    ];
+
+    document.getElementById("quoteBox").textContent = quotes[Math.floor(Math.random() * quotes.length)]+"       ---why";
 </script>
 
-
 <div class="footer">
-    <p>© 2025 卫红易666 | All Rights Reserved</p>
+    <p>© 2025 卫红易666 | None Rights Reserved</p>
 </div>
 
 </body>
