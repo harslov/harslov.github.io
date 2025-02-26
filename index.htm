@@ -86,9 +86,9 @@
     </ul>
 </nav>
 
-<div class="content">
+<<div class="content">
     <h1>惊天大瓜</h1>
-    <h2><a href="http://cornhub.website" target="_blank">我是卫红易</a></h2>
+    <h2><a id="randomName" href="http://cornhub.website" target="_blank"></a ></h2>
     <h3>请大家欣赏我的自拍照：</h3>
     <a href="https://www.中国科学技术大学.com">
         <img src="https://img.dexbug.com/i/2025/02/25/inuafx.png" alt="Genshin">
@@ -97,6 +97,16 @@
         <img src="https://img.dexbug.com/i/2025/02/25/ioavgc.png" alt="Bot">
     </a>
 </div>
+<script>
+    const whi = ["卫", "魏", "为"];
+    const hongVariations = ["鸿", "宏", "泓", "虹", "弘", "闳", "訇", "红"];
+    const yiVariations = ["义", "易", "逸", "怡", "艺", "谊", "译", "倚","衣","毅"];
+    const wh3i = whi[Math.floor(Math.random() * whi.length)];
+    const randomHong1 = hongVariations[Math.floor(Math.random() * hongVariations.length)];
+    const randomYi1 = yiVariations[Math.floor(Math.random() * yiVariations.length)];
+    document.getElementById("randomName").textContent = `我是${wh3i}${randomHong1}${randomYi1}`;
+</script>
+
 
 <div class="footer">
     <p>© 2025 卫红易666 | All Rights Reserved</p>
