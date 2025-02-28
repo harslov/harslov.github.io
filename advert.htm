@@ -21,14 +21,12 @@
           measurementId: "G-P2E62WRQYT"
         };
 
-        // 初始化 Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const commentsRef = ref(database, "comments");
 
         let userIP = "未知IP";
 
-        // 获取用户 IP 地址
         fetch("https://api64.ipify.org?format=json")
                 .then((response) => response.json())
                 .then((data) => {
@@ -42,13 +40,12 @@
           const commentInput = document.getElementById("comment-input");
           const commentList = document.getElementById("comment-list");
 
-          // 监听评论数据并按时间倒序排列（最新的在最上面）
           onValue(query(commentsRef, orderByChild("timestamp")), (snapshot) => {
             commentList.innerHTML = "";
             const commentsArray = [];
 
             snapshot.forEach((childSnapshot) => {
-              commentsArray.unshift(childSnapshot.val()); // 逆序存储
+              commentsArray.unshift(childSnapshot.val());
             });
 
             commentsArray.forEach((comment) => {
@@ -58,7 +55,6 @@
             });
           });
 
-          // 添加评论
           window.addComment = () => {
             if (commentInput.value.trim() === "") return;
 
@@ -199,10 +195,9 @@ header {
     background: #45a049;
 }
 
-/* 手机屏幕尺寸下的自适应布局 */
 @media (max-width: 768px) {
     .content .block-container {
-        grid-template-columns: 1fr; /* 每行只显示一个block */
+        grid-template-columns: 1fr; 
     }
 }
 
@@ -229,14 +224,19 @@ header {
             <img src="https://img.dexbug.com/i/2025/02/27/ci6nvo.png" width="735" height="auto" alt="成步堂">
         </div>
         <div class="block">
-            <p>No.3</p>
+            <p>10年1班张一驰：</p>
+            <img src="https://img.dexbug.com/i/2025/02/28/u6at7q.png" width="735" height="auto" alt="开箱">
+        </div>
+        <div class="block">
+            <p>No.4</p>
+            <p>广告招租中</p>
         </div>
     </div>
 
     <div class="comment-section">
         <h2>卫红易论坛</h2>
         <label for="comment-input">评论区：</label>
-        <textarea id="comment-input" class="comment-box" placeholder="写下你的评论..."></textarea>
+        <textarea id="comment-input" class="comment-box" placeholder="写下你的评论...(需要VPN)"></textarea>
         <button class="comment-button" onclick="addComment()">发表评论</button>
         <ul class="comment-list" id="comment-list"></ul>
     </div>
