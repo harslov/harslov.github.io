@@ -83,107 +83,130 @@
     </script>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f3f4f6;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        header {
-            background-color: #4CAF50;
-            padding: 20px;
-            color: white;
-            font-size: 36px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-        }
-        .content {
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            width: 80%;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            flex-grow: 1;
-        }
-        .content .block-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        .content .block {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .content .block img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
-        .footer {
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 18px;
-        }
-        .footer a {
-            color: #ffec58; 
-            font-size: 24px;
-        }
-        .footer a:hover {
-            color: white;
-        }
-        .content h1, .content p {
-            font-size: 24px; 
-        }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-        .comment-section {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .comment-box {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            resize: none;
-            font-size: 16px;
-        }
-        .comment-list {
-            margin-top: 10px;
-            list-style: none;
-            padding: 0;
-        }
-        .comment-list li {
-            background: white;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            text-align: left;
-        }
-        .comment-button {
-            margin-top: 10px;
-            padding: 10px 15px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .comment-button:hover {
-            background: #45a049;
-        }
+header {
+    background-color: #4CAF50;
+    padding: 20px;
+    color: white;
+    font-size: 36px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.content {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    width: 80%;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex-grow: 1;
+}
+
+.content .block-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.content .block {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.content .block img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.footer a {
+    color: #ffec58;
+    font-size: 24px;
+}
+
+.footer a:hover {
+    color: white;
+}
+
+.content h1, .content p {
+    font-size: 24px;
+}
+
+.comment-section {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.comment-box {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none;
+    font-size: 16px;
+}
+
+.comment-list {
+    margin-top: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+.comment-list li {
+    background: white;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.comment-button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment-button:hover {
+    background: #45a049;
+}
+
+/* 手机屏幕尺寸下的自适应布局 */
+@media (max-width: 768px) {
+    .content .block-container {
+        grid-template-columns: 1fr; /* 每行只显示一个block */
+    }
+}
+
+
     </style>
 </head>
 <body>
