@@ -1,102 +1,230 @@
-    <!DOCTYPE html>
-    <html lang="zh">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>卫红易666-广告</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f3f4f6;
-                margin: 0;
-                padding: 0;
-                text-align: center;
-                color: #333;
-                display: flex;
-                flex-direction: column;
-                min-height: 100vh;
-            }
-            header {
-                background-color: #4CAF50;
-                padding: 20px;
-                color: white;
-                font-size: 36px;
-                text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-            }
-            .content {
-                margin: 20px auto;
-                padding: 20px;
-                background-color: white;
-                width: 80%;
-                border-radius: 8px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                flex-grow: 1;
-            }
-            .content .block-container {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-            }
-            .content .block {
-                background-color: #f9f9f9;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                text-align: center;
-            }
-            .content .block img {
-                max-width: 100%;
-                border-radius: 8px;
-            }
-            .footer {
-                background-color: #333;
-                color: white;
-                padding: 20px;
-                text-align: center;
-                font-size: 18px;
-            }
-            .footer a {
-                color: #ffec58; 
-                font-size: 24px;
-            }
-            .footer a:hover {
-                color: white;
-            }
-            .content h1, .content p {
-                font-size: 24px; 
-            }
-        </style>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卫红易666-论坛</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getDatabase, ref, push, onValue, query, orderByChild } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-    <a href="https://harslov.github.io/" style="text-decoration: none;">
-        <header>
-            卫红易666
-        </header>
-    </a>
+        const firebaseConfig = {
+          apiKey: "AIzaSyCJM56oi4XUqLXJIY5dOyXIwig5EDfzKxg",
+          authDomain: "why666-68ee8.firebaseapp.com",
+          databaseURL: "https://why666-68ee8-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "why666-68ee8",
+          storageBucket: "why666-68ee8.appspot.com",
+          messagingSenderId: "949837677749",
+          appId: "1:949837677749:web:94dc64263ed0633b6a2afc",
+          measurementId: "G-P2E62WRQYT"
+        };
 
-    <div class="content">
-        <div class="block-container">
-            <div class="block">
-                <p>10年1班落配元：<br>我喜欢斧乃木余接</p>
-                <img src="https://img.dexbug.com/i/2025/02/26/cfv2io.jpg" alt="斧乃木">
-            </div>
-            <div class="block">
-                <p>11年7班金珂帆：</p>
-                <img src="https://img.dexbug.com/i/2025/02/27/ci6nvo.png" width=735 height=auto alt="成步堂">
-            </div>
-            <div class="block">
-                <p>10年1班顾大萌我老公</p>
-                <p>纯欲天花板，这是入寝图：</p>
-                <img src="https://img.dexbug.com/i/2025/02/28/f2qlup.jpg" width=735 height=auto alt="gtm">
-            </div>
+        // 初始化 Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const commentsRef = ref(database, "comments");
+
+        let userIP = "未知IP";
+
+        // 获取用户 IP 地址
+        fetch("https://api64.ipify.org?format=json")
+                .then((response) => response.json())
+                .then((data) => {
+                  userIP = data.ip;
+                })
+                .catch(() => {
+                  userIP = "未知IP";
+                });
+
+        window.addEventListener("DOMContentLoaded", () => {
+          const commentInput = document.getElementById("comment-input");
+          const commentList = document.getElementById("comment-list");
+
+          // 监听评论数据并按时间倒序排列（最新的在最上面）
+          onValue(query(commentsRef, orderByChild("timestamp")), (snapshot) => {
+            commentList.innerHTML = "";
+            const commentsArray = [];
+
+            snapshot.forEach((childSnapshot) => {
+              commentsArray.unshift(childSnapshot.val()); // 逆序存储
+            });
+
+            commentsArray.forEach((comment) => {
+              const li = document.createElement("li");
+              li.innerHTML = `<span>${comment.text} --- [${comment.ip}] <br><small>${comment.time}</small></span>`;
+              commentList.appendChild(li);
+            });
+          });
+
+          // 添加评论
+          window.addComment = () => {
+            if (commentInput.value.trim() === "") return;
+
+            const timestamp = Date.now();
+            const readableTime = new Date().toLocaleString();
+            const commentData = {
+              text: commentInput.value,
+              time: readableTime,
+              timestamp: timestamp,
+              ip: userIP
+            };
+
+            push(commentsRef, commentData)
+                    .then(() => {
+                      commentInput.value = "";
+                    })
+                    .catch((error) => {
+                      console.error("评论保存失败:", error);
+                    });
+          };
+        });
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #4CAF50;
+            padding: 20px;
+            color: white;
+            font-size: 36px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .content {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            width: 80%;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+        }
+        .content .block-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .content .block {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .content .block img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .footer a {
+            color: #ffec58; 
+            font-size: 24px;
+        }
+        .footer a:hover {
+            color: white;
+        }
+        .content h1, .content p {
+            font-size: 24px; 
+        }
+
+        .comment-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .comment-box {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            resize: none;
+            font-size: 16px;
+        }
+        .comment-list {
+            margin-top: 10px;
+            list-style: none;
+            padding: 0;
+        }
+        .comment-list li {
+            background: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .comment-button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .comment-button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<a href="https://harslov.github.io/" style="text-decoration: none;">
+    <header>
+        卫红易666
+    </header>
+</a>
+
+
+<div class="content">
+    <div class="block-container">
+        <div class="block">
+            <p>10年1班落配元：<br>我喜欢斧乃木余接</p>
+            <img src="https://img.dexbug.com/i/2025/02/26/cfv2io.jpg" alt="斧乃木">
+        </div>
+        <div class="block">
+            <p>11年7班金珂帆：</p>
+            <img src="https://img.dexbug.com/i/2025/02/27/ci6nvo.png" width="735" height="auto" alt="成步堂">
+        </div>
+        <div class="block">
+            <p>10年1班顾大萌我老公</p>
+            <p>纯欲天花板，这是入寝图：</p>
+            <img src="https://img.dexbug.com/i/2025/02/28/f2qlup.jpg" width="735" height="auto" alt="gtm">
         </div>
     </div>
 
-    <div class="footer">
-        <p style="font-size: 24px; color: #f2ff93;">招租！<br>有意者请联系：<a href="mailto:960209832@qq.com">960209832@qq.com</a></p>
-        <p>© 2025 卫红易666 | All Rights Reserved</p>
+    <div class="comment-section">
+        <h2>评论区</h2>
+        <label for="comment-input">评论：</label>
+        <textarea id="comment-input" class="comment-box" placeholder="写下你的评论...(需要VPN)"></textarea>
+        <button class="comment-button" onclick="addComment()">发表评论</button>
+        <ul class="comment-list" id="comment-list"></ul>
     </div>
+</div>
 
-    </body>
-    </html>
+<div class="footer">
+    <p style="font-size: 24px; color: #f2ff93;">广告招租！<br>有意者请联系：<a href="mailto:960209832@qq.com">960209832@qq.com</a></p>
+    <p>© 2025 卫红易666 | All Rights Reserved</p>
+</div>
+
+</body>
+</html>
