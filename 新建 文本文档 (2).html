@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园告白墙</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #333;
+            padding: 15px 0;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #444;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            padding: 10px 15px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .publish-btn {
+            display: block;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 12px 0;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        .publish-btn:hover {
+            background-color: #555;
+        }
+
+        .wall-item {
+            background-color: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .author {
+            font-weight: bold;
+        }
+
+        .anonymous {
+            color: #666;
+            font-style: italic;
+        }
+
+        .timestamp {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .item-content {
+            margin-bottom: 15px;
+            white-space: pre-line;
+        }
+
+        .media-container {
+            margin: 15px 0;
+        }
+
+        .media-container img,
+        .media-container video {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+
+        .action-btn:hover {
+            color: #333;
+        }
+
+        .comments-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            display: none;
+        }
+
+        .comments-section.active {
+            display: block;
+        }
+
+        .comment {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .comment-time {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .comment-content {
+            font-size: 14px;
+        }
+
+        .comment-form {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: none;
+            height: 40px;
+        }
+
+        .comment-submit {
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0 15px;
+            cursor: pointer;
+        }
+
+        .load-more {
+            display: block;
+            width: 100%;
+            background-color: white;
+            color: #333;
+            text-align: center;
+            padding: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+
+        .load-more:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* 发布弹窗 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 4px;
+            padding: 25px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .file-upload {
+            border: 1px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .file-upload:hover {
+            background-color: #f9f9f9;
+        }
+
+        .anonymous-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .submit-form {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .submit-form:hover {
+            background-color: #555;
+        }
+
+        .preview-container {
+            margin: 15px 0;
+            max-height: 200px;
+            overflow: hidden;
+        }
+
+        .preview-container img,
+        .preview-container video {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .item-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .comment-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>校园告白墙</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#" class="active">首页</a></li>
+            <li><a href="#">最新</a></li>
+            <li><a href="#">热门</a></li>
+            <li><a href="#">关于</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <a href="#publish-modal" class="publish-btn" id="open-publish-modal">
+            <i class="fa fa-pencil"></i> 发布新内容
+        </a>
+
+        <!-- 告白墙内容项 -->
+        <div class="wall-item">
+            <div class="item-header">
+                <div class="author anonymous">匿名用户</div>
+                <div class="timestamp">2025-11-25 18:30:45</div>
+            </div>
+            <div class="item-content">
+                图书馆三楼靠窗位置的那个女生，每次看到你认真学习的样子都觉得特别美好。你的侧脸真的很好看，希望有机会能认识你～ 如果有缘看到这条表白，能不能下次在图书馆门口的奶茶店等我一下？
+            </div>
+            <div class="media-container">
+                <img src="https://picsum.photos/id/237/800/500" alt="分享图片">
+            </div>
+            <div class="item-actions">
+                <button class="action-btn like-btn">
+                    <i class="fa fa-heart-o"></i> 喜欢 (131)
+                </button>
+                <button class="action-btn comment-toggle">
+                    <i class="fa fa-comment-o"></i> 评论 (32)
+                </button>
+                <button class="action-btn share-btn">
+                    <i class="fa fa-share"></i> 分享
+                </button>
+            </div>
+            <div class="comments-section">
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="comment-author">隔壁班同学</span>
+                        <span class="comment-time">2025-11-25 19:45:12</span>
+                    </div>
+                    <div class="comment-content">
+                        我知道是谁！是不是穿白色连衣裙的那个女生？
+                    </div>
+                </div>
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="comment-author">匿名用户</span>
+                        <span class="comment-time">2025-11-25 20:10:33</span>
+                    </div>
+                    <div class="comment-content">
+                        祝有情人终成眷属！加油呀勇敢的同学～
+                    </div>
+                </div>
+                <form class="comment-form">
+                    <textarea class="comment-input" placeholder="写下你的评论..."></textarea>
+                    <button type="submit" class="comment-submit">提交</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="wall-item">
+            <div class="item-header">
+                <div class="author">计算机系-小李</div>
+                <div class="timestamp">2025-11-24 19:45:22</div>
+            </div>
+            <div class="item-content">
+                给我的女神@小敏，这首歌我练了很久，希望你能喜欢。虽然我们马上就要毕业了，但我还是想把这份心意告诉你。不管未来我们在哪里，你都是我青春里最美好的回忆～
+            </div>
+            <div class="media-container">
+                <video controls poster="https://picsum.photos/id/1025/800/500">
+                    <source src="#" type="video/mp4">
+                    您的浏览器不支持视频播放
+                </video>
+            </div>
+            <div class="item-actions">
+                <button class="action-btn like-btn">
+                    <i class="fa fa-heart-o"></i> 喜欢 (256)
+                </button>
+                <button class="action-btn comment-toggle">
+                    <i class="fa fa-comment-o"></i> 评论 (58)
+                </button>
+                <button class="action-btn share-btn">
+                    <i class="fa fa-share"></i> 分享
+                </button>
+            </div>
+            <div class="comments-section">
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="comment-author">小敏</span>
+                        <span class="comment-time">2025-11-24 20:30:15</span>
+                    </div>
+                    <div class="comment-content">
+                        谢谢你的心意，我很喜欢这首歌！其实我也注意你很久了，毕业季我们一起吃个饭吧～
+                    </div>
+                </div>
+                <form class="comment-form">
+                    <textarea class="comment-input" placeholder="写下你的评论..."></textarea>
+                    <button type="submit" class="comment-submit">提交</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="wall-item">
+            <div class="item-header">
+                <div class="author anonymous">匿名用户</div>
+                <div class="timestamp">2025-11-23 22:15:08</div>
+            </div>
+            <div class="item-content">
+                致篮球场穿23号球衣的男生：每次上体育课都能看到你在篮球场上挥洒汗水的样子，阳光洒在你身上真的特别耀眼。你的三分球很准，笑容也很治愈。不知道你有没有女朋友，如果没有的话，能不能给我一个认识你的机会？我是经常坐在看台上穿白色T恤的女生～
+            </div>
+            <div class="item-actions">
+                <button class="action-btn like-btn">
+                    <i class="fa fa-heart-o"></i> 喜欢 (189)
+                </button>
+                <button class="action-btn comment-toggle">
+                    <i class="fa fa-comment-o"></i> 评论 (45)
+                </button>
+                <button class="action-btn share-btn">
+                    <i class="fa fa-share"></i> 分享
+                </button>
+            </div>
+            <div class="comments-section">
+                <form class="comment-form">
+                    <textarea class="comment-input" placeholder="写下你的评论..."></textarea>
+                    <button type="submit" class="comment-submit">提交</button>
+                </form>
+            </div>
+        </div>
+
+        <button class="load-more">加载更多</button>
+    </div>
+
+    <!-- 发布内容弹窗 -->
+    <div class="modal" id="publish-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <h2>发布到告白墙</h2>
+            <form id="publish-form">
+                <div class="form-group">
+                    <label for="content">内容</label>
+                    <textarea id="content" class="form-control" placeholder="写下你想说的话..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>添加媒体（可选）</label>
+                    <label class="file-upload" id="image-upload">
+                        <i class="fa fa-image"></i> 点击上传图片
+                        <input type="file" accept="image/*" style="display: none;" id="image-file">
+                    </label>
+                    <label class="file-upload" id="video-upload">
+                        <i class="fa fa-video-camera"></i> 点击上传视频
+                        <input type="file" accept="video/*" style="display: none;" id="video-file">
+                    </label>
+                    <div class="preview-container" id="media-preview"></div>
+                </div>
+
+                <div class="anonymous-option">
+                    <input type="checkbox" id="anonymous" checked>
+                    <label for="anonymous">匿名发布</label>
+                </div>
+
+                <button type="submit" class="submit-form">发布</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 校园告白墙 | 保持真实，传递美好</p>
+    </footer>
+
+    <script>
+        // 评论区展开/收起
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const commentsSection = this.closest('.wall-item').querySelector('.comments-section');
+                commentsSection.classList.toggle('active');
+                
+                // 切换图标
+                const icon = this.querySelector('i');
+                if (commentsSection.classList.contains('active')) {
+                    icon.classList.remove('fa-comment-o');
+                    icon.classList.add('fa-comment');
+                } else {
+                    icon.classList.remove('fa-comment');
+                    icon.classList.add('fa-comment-o');
+                }
+            });
+        });
+
+        // 喜欢按钮效果
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('fa-heart-o')) {
+                    icon.classList.remove('fa-heart-o');
+                    icon.classList.add('fa-heart');
+                    this.style.color = '#e74c3c';
+                    
+                    // 更新数量
+                    const text = this.textContent.trim();
+                    const count = parseInt(text.match(/\((\d+)\)/)[1]);
+                    this.innerHTML = `<i class="fa fa-heart"></i> 喜欢 (${count + 1})`;
+                } else {
+                    icon.classList.remove('fa-heart');
+                    icon.classList.add('fa-heart-o');
+                    this.style.color = '';
+                    
+                    // 更新数量
+                    const text = this.textContent.trim();
+                    const count = parseInt(text.match(/\((\d+)\)/)[1]);
+                    this.innerHTML = `<i class="fa fa-heart-o"></i> 喜欢 (${count - 1})`;
+                }
+            });
+        });
+
+        // 发布弹窗控制
+        const modal = document.getElementById('publish-modal');
+        const openModalBtn = document.getElementById('open-publish-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        openModalBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeModalBtn.addEventListener('click', function() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // 点击弹窗外部关闭
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // 媒体预览
+        const imageUpload = document.getElementById('image-upload');
+        const videoUpload = document.getElementById('video-upload');
+        const imageFile = document.getElementById('image-file');
+        const videoFile = document.getElementById('video-file');
+        const mediaPreview = document.getElementById('media-preview');
+
+        imageUpload.addEventListener('click', function() {
+            imageFile.click();
+        });
+
+        videoUpload.addEventListener('click', function() {
+            videoFile.click();
+        });
+
+        imageFile.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    mediaPreview.innerHTML = `<img src="${event.target.result}" alt="预览图">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        videoFile.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    mediaPreview.innerHTML = `<video controls src="${event.target.result}"></video>`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 发布表单提交
+        document.getElementById('publish-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 在实际项目中，这里会有AJAX请求发送数据到服务器
+            alert('发布成功！内容将在审核后显示');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            this.reset();
+            mediaPreview.innerHTML = '';
+        });
+
+        // 评论表单提交
+        document.querySelectorAll('.comment-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const input = this.querySelector('.comment-input');
+                const content = input.value.trim();
+                
+                if (content) {
+                    const wallItem = this.closest('.wall-item');
+                    const commentsSection = wallItem.querySelector('.comments-section');
+                    
+                    // 创建新评论
+                    const now = new Date();
+                    const timeStr = now.getFullYear() + '-' + 
+                                   String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                                   String(now.getDate()).padStart(2, '0') + ' ' + 
+                                   String(now.getHours()).padStart(2, '0') + ':' + 
+                                   String(now.getMinutes()).padStart(2, '0') + ':' + 
+                                   String(now.getSeconds()).padStart(2, '0');
+                    
+                    const commentHtml = `
+                        <div class="comment">
+                            <div class="comment-header">
+                                <span class="comment-author">我</span>
+                                <span class="comment-time">${timeStr}</span>
+                            </div>
+                            <div class="comment-content">
+                                ${content}
+                            </div>
+                        </div>
+                    `;
+                    
+                    // 添加到评论区最前面
+                    commentsSection.insertAdjacentHTML('afterbegin', commentHtml);
+                    
+                    // 清空输入框
+                    input.value = '';
+                    
+                    // 更新评论数
+                    const commentBtn = wallItem.querySelector('.comment-toggle');
+                    const count = parseInt(commentBtn.textContent.match(/\((\d+)\)/)[1]);
+                    commentBtn.innerHTML = `<i class="fa fa-comment"></i> 评论 (${count + 1})`;
+                }
+            });
+        });
+
+        // 加载更多按钮
+        document.querySelector('.load-more').addEventListener('click', function() {
+            this.innerHTML = '<i class="fa fa-spinner fa-spin"></i> 加载中...';
+            
+            // 模拟加载延迟
+            setTimeout(() => {
+                this.innerHTML = '加载更多';
+                alert('已经是最新内容了');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
