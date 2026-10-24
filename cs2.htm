@@ -11,7 +11,7 @@
     <meta property="og:site_name" content="卫红易666">
     <meta property="og:title" content="卫红易666-CS2">
     <meta property="og:description" content="如何提升枪法CSGO · 卫红易666">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%2334d399'/%3E%3Cstop offset='.5' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%23a78bfa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%23f8fae6'/%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Ctext x='32' y='44' font-size='34' font-family='PingFang SC,Microsoft YaHei,sans-serif' font-weight='700' text-anchor='middle' fill='url(%23g)'%3E%E5%8D%AB%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAC1klEQVR4AQyPuY8bdQCF53fN4bHn9Lm2szbZ1WZFBCISSCkogCZIiAYUKiokSgpQGiMqKGkA8QfQQUmXKk2UKEq0G20SJUq8cbweJ7bn9NwzO+OZWPq69z7pPXjv79Gdv0b/jr779fonv33z2X+j72//Mbr758+3fr/xz0/f/vLVpz9cuzr6+vPR9Ws3vvz4xy+uQgRJnheyrF46OOS4iq7rhmHq+mpy+nI+m9OYHOwfDIfDdrMliXKV5SEmrOuHi4U+mZytbZdlOJ6rgAKkUcKz3BZrpWuTaeB4PMNLggIlWel0dkRRIBjXFXnQ7+0NhzudliTUVFFQBYEGII/jTZLyDNuUVEhjtM1adfXyuwcfXnn/nd2+IolSlW+rcrfZ6NSVw4vDjz5478rlw64qyzwHMSxrFbbfbe8NLqiyKIu1qlCFgKKoQqzx3XZj2O/uXeg1JIGAEhQZzM/TLIkiz52fTaPQZ2iyOT8HABGGjZJka1YrDMEUBBuMijhcQ8eyl4vl6fh0djZz1+7zF+Ojo5OXUy3NqZVhv5ppa98Lo9APfcdxbNuGYZTohrVaGixboZmKpq2ePB3fP3784PjR7I3u+onlePbas2xnaZqW60IAMEY0xoSlWY6p1JWGqjYajbaiNFutHYxpzws8P3C9IE7yEhIIIK7VxFazFXjeydGxY5iopBiACYXXprOcvwZFWeRFlhUlRNtr0PRDimYEUer3epf29xWxxiBEABX7rrlcEAQ5momi+HxTlJgkW8sIYt3zM4REdbtFQYiiEVWhUY2j9wb9i4PdLEuDOIo3hZ8VfL0Ngaj4FIooAHm+JCQvSy/wsjyVFbHdaaVZajjrbTspQUY4qirBZwsj44W5GzyeTDc0afa7vcHulnZ3ZwNK2/f9NDXD5LXjexvwcDyFd09OEgpphvn/zZvj6TSI4wJQCOMoTQzLsteuG0a67WgrQ9MtzbDfAgAA//8tzon9AAAABklEQVQDAAGEaFO3pF62AAAAAElFTkSuQmCC">
 
     <script>document.documentElement.classList.remove("no-js");document.documentElement.classList.add("js");</script>
     <style>
@@ -2488,6 +2488,44 @@ body { background: var(--bg); }
 .site-footer { margin-top: auto; }
 
     </style>
+<style>
+.music-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--grad);
+  color: #28320a;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: .02em;
+  cursor: pointer;
+  box-shadow: 0 16px 34px -22px rgba(115, 205, 50, .75), inset 0 1px 0 rgba(255, 255, 255, .5);
+  transition: transform .25s, filter .25s, box-shadow .25s;
+}
+.music-btn:hover { transform: translateY(-2px); filter: brightness(1.04); }
+.music-btn:active { transform: translateY(0); }
+.music-btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+.music-icon { width: 19px; height: 19px; flex: 0 0 19px; fill: currentColor; }
+.music-icon .ico-pause { display: none; }
+.music-btn.is-playing .ico-play { display: none; }
+.music-btn.is-playing .ico-pause { display: block; }
+.music-alt {
+  padding-bottom: 2px;
+  border-bottom: 1px dashed rgba(92, 105, 24, .35);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  transition: color .25s, border-color .25s;
+}
+.music-alt:hover { color: var(--ink); border-color: var(--ink); }
+@media (max-width: 680px) {
+  .music-btn { padding: 11px 16px; font-size: 13px; }
+  .music-alt { font-size: 11.5px; }
+}
+</style>
 </head>
 <body class="page-cs2">
 <a class="skip-link" href="#main">跳到主要内容</a>
@@ -2521,6 +2559,13 @@ body { background: var(--bg); }
             <span class="eyebrow"><span class="dot" aria-hidden="true"></span>CS2 · AIM · DEMO</span>
             <h1 class="display">如何提升枪法CSGO</h1>
             <p class="hero-note">来自卫红易666的 CS2 小站</p>
+            <div class="hero-actions">
+                <button class="music-btn" id="musicToggle" type="button" aria-pressed="false" aria-label="播放音乐：老男孩（DJ混音版）" title="老男孩（DJ混音版）">
+                    <svg class="music-icon" viewBox="0 0 24 24" aria-hidden="true"><path class="ico-play" d="M8 5v14l11-7z"/><path class="ico-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+                    <span id="musicLabel">播放音乐</span>
+                </button>
+                <a class="music-alt" href="https://music.163.com/song?id=3419448339&amp;uct2=U2FsdGVkX19cz0THhsXqu5xCsUHG4MBqtJG11gyFy+M=" target="_blank" rel="noopener">网易云备用 ↗</a>
+            </div>
         </div>
         <div class="cs2-crosshair" aria-hidden="true"><span></span></div>
     </section>
@@ -2568,6 +2613,8 @@ body { background: var(--bg); }
     </figure>
 </div>
 
+
+<audio id="cs2Music" src="laonanhai-dj.mp3" preload="auto" autoplay aria-hidden="true"></audio>
 
 <script>
 (function () {
@@ -2757,6 +2804,52 @@ body { background: var(--bg); }
   });
 })();
 
+</script>
+
+<script>
+(function () {
+  'use strict';
+  var audio = document.getElementById('cs2Music');
+  var btn = document.getElementById('musicToggle');
+  var label = document.getElementById('musicLabel');
+  if (!audio || !btn) { return; }
+  audio.volume = 0.7;
+  var errorHandled = false;
+
+  function sync() {
+    var playing = !audio.paused && !audio.ended;
+    btn.classList.toggle('is-playing', playing);
+    btn.setAttribute('aria-pressed', String(playing));
+    btn.setAttribute('aria-label', playing ? '暂停音乐：老男孩（DJ混音版）' : '播放音乐：老男孩（DJ混音版）');
+    if (label) { label.textContent = playing ? '暂停音乐' : '播放音乐'; }
+  }
+
+  function playMusic() {
+    var promise = audio.play();
+    if (promise && promise.catch) {
+      promise.catch(function () { sync(); });
+    }
+  }
+
+  btn.addEventListener('click', function () {
+    if (audio.paused) { playMusic(); } else { audio.pause(); }
+  });
+  audio.addEventListener('play', sync);
+  audio.addEventListener('pause', sync);
+  audio.addEventListener('ended', sync);
+  audio.addEventListener('error', function () {
+    if (errorHandled) { return; }
+    errorHandled = true;
+    btn.disabled = true;
+    if (label) { label.textContent = '音乐加载失败'; }
+    var alt = document.querySelector('.music-alt');
+    if (alt) { alt.textContent = '到网易云播放 ↗'; }
+  });
+
+  /* try to autoplay; if the browser blocks it, the button is the fallback */
+  window.setTimeout(playMusic, 300);
+  sync();
+})();
 </script>
 </body>
 </html>
