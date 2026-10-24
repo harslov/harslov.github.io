@@ -2489,6 +2489,24 @@ body { background: var(--bg); }
 
     </style>
 <style>
+.cs2-title-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 4vw, 52px);
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.cs2-title-row .display { margin: 0; flex: 1 1 auto; }
+.cs2-title-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+@media (max-width: 680px) {
+  .cs2-title-actions { flex-direction: row; align-items: center; flex-wrap: wrap; }
+}
 .music-btn {
   display: inline-flex;
   align-items: center;
@@ -2512,19 +2530,12 @@ body { background: var(--bg); }
 .music-icon .ico-pause { display: none; }
 .music-btn.is-playing .ico-play { display: none; }
 .music-btn.is-playing .ico-pause { display: block; }
-.music-alt {
-  padding-bottom: 2px;
-  border-bottom: 1px dashed rgba(92, 105, 24, .35);
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 600;
-  transition: color .25s, border-color .25s;
-}
-.music-alt:hover { color: var(--ink); border-color: var(--ink); }
 @media (max-width: 680px) {
   .music-btn { padding: 11px 16px; font-size: 13px; }
-  .music-alt { font-size: 11.5px; }
 }
+</style>
+<style>
+.brand-mark img { width: 100%; height: 100%; display: block; object-fit: cover; }
 </style>
 </head>
 <body class="page-cs2">
@@ -2541,7 +2552,7 @@ body { background: var(--bg); }
 <header class="site-header">
     <div class="nav-shell">
         <a class="brand" href="index.htm" aria-label="卫红易666 首页">
-            <span class="brand-mark" aria-hidden="true">卫</span>
+            <span class="brand-mark" aria-hidden="true"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAC1klEQVR4AQyPuY8bdQCF53fN4bHn9Lm2szbZ1WZFBCISSCkogCZIiAYUKiokSgpQGiMqKGkA8QfQQUmXKk2UKEq0G20SJUq8cbweJ7bn9NwzO+OZWPq69z7pPXjv79Gdv0b/jr779fonv33z2X+j72//Mbr758+3fr/xz0/f/vLVpz9cuzr6+vPR9Ws3vvz4xy+uQgRJnheyrF46OOS4iq7rhmHq+mpy+nI+m9OYHOwfDIfDdrMliXKV5SEmrOuHi4U+mZytbZdlOJ6rgAKkUcKz3BZrpWuTaeB4PMNLggIlWel0dkRRIBjXFXnQ7+0NhzudliTUVFFQBYEGII/jTZLyDNuUVEhjtM1adfXyuwcfXnn/nd2+IolSlW+rcrfZ6NSVw4vDjz5478rlw64qyzwHMSxrFbbfbe8NLqiyKIu1qlCFgKKoQqzx3XZj2O/uXeg1JIGAEhQZzM/TLIkiz52fTaPQZ2iyOT8HABGGjZJka1YrDMEUBBuMijhcQ8eyl4vl6fh0djZz1+7zF+Ojo5OXUy3NqZVhv5ppa98Lo9APfcdxbNuGYZTohrVaGixboZmKpq2ePB3fP3784PjR7I3u+onlePbas2xnaZqW60IAMEY0xoSlWY6p1JWGqjYajbaiNFutHYxpzws8P3C9IE7yEhIIIK7VxFazFXjeydGxY5iopBiACYXXprOcvwZFWeRFlhUlRNtr0PRDimYEUer3epf29xWxxiBEABX7rrlcEAQ5momi+HxTlJgkW8sIYt3zM4REdbtFQYiiEVWhUY2j9wb9i4PdLEuDOIo3hZ8VfL0Ngaj4FIooAHm+JCQvSy/wsjyVFbHdaaVZajjrbTspQUY4qirBZwsj44W5GzyeTDc0afa7vcHulnZ3ZwNK2/f9NDXD5LXjexvwcDyFd09OEgpphvn/zZvj6TSI4wJQCOMoTQzLsteuG0a67WgrQ9MtzbDfAgAA//8tzon9AAAABklEQVQDAAGEaFO3pF62AAAAAElFTkSuQmCC" alt="" width="16" height="16"></span>
             <span class="brand-text">卫红易<em>666</em></span>
         </a>
         <nav class="nav-links" aria-label="主导航">
@@ -2557,14 +2568,14 @@ body { background: var(--bg); }
         <div class="cs2-ghost" aria-hidden="true">CS2</div>
         <div class="container reveal">
             <span class="eyebrow"><span class="dot" aria-hidden="true"></span>CS2 · AIM · DEMO</span>
-            <h1 class="display">如何提升枪法CSGO</h1>
-            <p class="hero-note">来自卫红易666的 CS2 小站</p>
-            <div class="hero-actions">
-                <button class="music-btn" id="musicToggle" type="button" aria-pressed="false" aria-label="播放音乐：老男孩（DJ混音版）" title="老男孩（DJ混音版）">
-                    <svg class="music-icon" viewBox="0 0 24 24" aria-hidden="true"><path class="ico-play" d="M8 5v14l11-7z"/><path class="ico-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
-                    <span id="musicLabel">播放音乐</span>
-                </button>
-                <a class="music-alt" href="https://music.163.com/song?id=3419448339&amp;uct2=U2FsdGVkX19cz0THhsXqu5xCsUHG4MBqtJG11gyFy+M=" target="_blank" rel="noopener">网易云备用 ↗</a>
+            <div class="cs2-title-row">
+                <h1 class="display">如何提升枪法CSGO</h1>
+                <div class="cs2-title-actions">
+                    <button class="music-btn" id="musicToggle" type="button" aria-pressed="false" aria-label="播放音乐：老男孩（DJ混音版）" title="老男孩（DJ混音版）">
+                        <svg class="music-icon" viewBox="0 0 24 24" aria-hidden="true"><path class="ico-play" d="M8 5v14l11-7z"/><path class="ico-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+                        <span id="musicLabel">播放音乐</span>
+                    </button>
+                </div>
             </div>
         </div>
         <div class="cs2-crosshair" aria-hidden="true"><span></span></div>
@@ -2614,7 +2625,7 @@ body { background: var(--bg); }
 </div>
 
 
-<audio id="cs2Music" src="laonanhai-dj.mp3" preload="auto" autoplay aria-hidden="true"></audio>
+<audio id="cs2Music" src="audio/laonanhai-dj.mp3" preload="auto" autoplay aria-hidden="true"></audio>
 
 <script>
 (function () {
@@ -2842,8 +2853,6 @@ body { background: var(--bg); }
     errorHandled = true;
     btn.disabled = true;
     if (label) { label.textContent = '音乐加载失败'; }
-    var alt = document.querySelector('.music-alt');
-    if (alt) { alt.textContent = '到网易云播放 ↗'; }
   });
 
   /* try to autoplay; if the browser blocks it, the button is the fallback */
