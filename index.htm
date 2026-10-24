@@ -390,6 +390,46 @@ body.has-pointer .cursor-glow { opacity: 1; }
   box-shadow: 0 12px 34px -18px var(--b), inset 0 1px 0 rgba(255, 255, 255, .08);
 }
 .random-name a:hover::after { transform: translate(2px, -2px); }
+.random-name-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 30px;
+}
+.random-name-row .random-name { margin: 0; }
+.random-name-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .62);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .3s var(--ease), background .3s, border-color .3s, color .3s;
+}
+.random-name-btn svg { width: 15px; height: 15px; flex: 0 0 15px; transition: transform .4s var(--ease); }
+.random-name-btn:hover {
+  transform: translateY(-2px);
+  border-color: transparent;
+  background: var(--grad);
+  color: #28320a;
+}
+.random-name-btn:hover svg { transform: rotate(180deg); }
+.random-name-btn:active { transform: translateY(0); }
+.random-name-btn.is-spinning svg { animation: nameBtnSpin .45s var(--ease); }
+.random-name a.is-refreshing { animation: namePop .35s var(--ease); }
+@keyframes namePop {
+  0% { transform: scale(.94); opacity: .55; }
+  100% { transform: none; opacity: 1; }
+}
+@keyframes nameBtnSpin {
+  to { transform: rotate(360deg); }
+}
 
 .selfie-stage { position: relative; min-width: 0; }
 .selfie-halo {
@@ -1444,6 +1484,8 @@ body.has-pointer .cursor-glow { opacity: 1; }
   .page-hero .display { font-size: clamp(2.2rem, 11vw, 3rem); }
   .random-name { margin-bottom: 24px; }
   .random-name a { padding: 9px 14px; }
+  .random-name-row { margin-bottom: 24px; gap: 8px; }
+  .random-name-btn { padding: 9px 13px; font-size: 12px; }
   .quote-card::after { right: 8px; top: -30px; font-size: 150px; }
   .quote-meta { flex-direction: column; align-items: flex-start; gap: 12px; }
   .guest-grid { grid-template-columns: 1fr; }
@@ -2520,7 +2562,13 @@ body { background: var(--bg); }
             <div class="hero-copy reveal">
                 <span class="eyebrow"><span class="dot" aria-hidden="true"></span>HARSLOV.GITHUB.IO · PERSONAL SPACE</span>
                 <h1 class="display">惊天大瓜</h1>
-                <h2 class="random-name"><a id="randomName" href="https://www.baidu.com" target="_blank" rel="noopener">我是卫红易</a></h2>
+                <div class="random-name-row">
+                    <h2 class="random-name" aria-live="polite"><a id="randomName" href="https://www.baidu.com" target="_blank" rel="noopener">我是卫红易</a></h2>
+                    <button class="random-name-btn" id="randomNameBtn" type="button" aria-controls="randomName" aria-label="随机换一个名字">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/></svg>
+                        <span>随机名字</span>
+                    </button>
+                </div>
                 <h3 class="section-kicker">请大家欣赏我的自拍照：</h3>
             </div>
             <div class="selfie-stage reveal" style="--d:140ms">
@@ -2760,10 +2808,47 @@ body { background: var(--bg); }
   var hongVariations = ["鸿", "宏", "泓", "虹", "弘", "红", "轰"];
   var yiVariations = ["易", "逸", "怡", "艺", "谊", "译", "衣", "毅", "一"];
   function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
-  var name = pick(whi) + pick(hongVariations) + pick(yiVariations);
+  function makeName() { return pick(whi) + pick(hongVariations) + pick(yiVariations); }
 
   var randomName = document.getElementById('randomName');
-  if (randomName) { randomName.textContent = '我是' + name; }
+  var randomBtn = document.getElementById('randomNameBtn');
+  var quoteText = document.getElementById('quoteText');
+  var quoteAuthor = document.getElementById('quoteAuthor');
+  var shuffle = document.getElementById('shuffleQuote');
+  var currentName = '';
+
+  function setName(name) {
+    currentName = name;
+    if (randomName) {
+      randomName.textContent = '我是' + name;
+      randomName.classList.remove('is-refreshing');
+      void randomName.offsetWidth;
+      randomName.classList.add('is-refreshing');
+    }
+    if (quoteAuthor && quoteAuthor.textContent) {
+      quoteAuthor.textContent = '——' + currentName;
+    }
+  }
+
+  function refreshName() {
+    var next = makeName();
+    var guard = 0;
+    while (next === currentName && guard < 30) {
+      next = makeName();
+      guard += 1;
+    }
+    setName(next);
+  }
+
+  refreshName();
+  if (randomBtn) {
+    randomBtn.addEventListener('click', function () {
+      refreshName();
+      randomBtn.classList.remove('is-spinning');
+      void randomBtn.offsetWidth;
+      randomBtn.classList.add('is-spinning');
+    });
+  }
 
   var quotes = [
     "得了便宜还卖乖",
@@ -2775,21 +2860,18 @@ body { background: var(--bg); }
     "人心中的成见是一座大山",
     "今天我带飞"
   ];
-  var quoteText = document.getElementById('quoteText');
-  var quoteAuthor = document.getElementById('quoteAuthor');
-  var shuffle = document.getElementById('shuffleQuote');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var timer = null;
   var current = '';
 
-  function typeQuote(text, author) {
+  function typeQuote(text) {
     if (!quoteText) { return; }
     if (timer) { clearInterval(timer); timer = null; }
     quoteText.textContent = '';
     if (quoteAuthor) { quoteAuthor.textContent = ''; }
     if (reduce) {
       quoteText.textContent = text;
-      if (quoteAuthor) { quoteAuthor.textContent = '——' + author; }
+      if (quoteAuthor) { quoteAuthor.textContent = '——' + currentName; }
       return;
     }
     var chars = Array.from(text);
@@ -2800,7 +2882,7 @@ body { background: var(--bg); }
       if (index >= chars.length) {
         clearInterval(timer);
         timer = null;
-        if (quoteAuthor) { quoteAuthor.textContent = '——' + author; }
+        if (quoteAuthor) { quoteAuthor.textContent = '——' + currentName; }
       }
     }, 46);
   }
@@ -2813,7 +2895,7 @@ body { background: var(--bg); }
       next = quotes[0];
     }
     current = next;
-    typeQuote(current, name);
+    typeQuote(current);
   }
 
   if (shuffle) { shuffle.addEventListener('click', nextQuote); }
