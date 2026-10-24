@@ -2492,50 +2492,70 @@ body { background: var(--bg); }
 .cs2-title-row {
   display: flex;
   align-items: center;
-  gap: clamp(18px, 4vw, 52px);
+  gap: 18px 28px;
   flex-wrap: wrap;
-  margin-top: 20px;
+  margin: 18px 0 12px;
 }
 .cs2-title-row .display { margin: 0; flex: 1 1 auto; }
 .cs2-title-actions {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+  align-items: center;
   flex: 0 0 auto;
-}
-@media (max-width: 680px) {
-  .cs2-title-actions { flex-direction: row; align-items: center; flex-wrap: wrap; }
 }
 .music-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 9px;
-  padding: 12px 22px;
+  min-width: 196px;
+  padding: 14px 24px;
   border: 0;
   border-radius: 999px;
   background: var(--grad);
   color: #28320a;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 900;
-  letter-spacing: .02em;
+  letter-spacing: .01em;
+  white-space: nowrap;
   cursor: pointer;
-  box-shadow: 0 16px 34px -22px rgba(115, 205, 50, .75), inset 0 1px 0 rgba(255, 255, 255, .5);
-  transition: transform .25s, filter .25s, box-shadow .25s;
+  box-shadow: 0 18px 36px -22px rgba(115, 205, 50, .65), inset 0 1px 0 rgba(255, 255, 255, .45);
+  animation: jumpPulse 3.2s ease-in-out infinite;
+  transition: transform .25s var(--ease), box-shadow .25s;
 }
-.music-btn:hover { transform: translateY(-2px); filter: brightness(1.04); }
+.music-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 44px -22px rgba(115, 205, 50, .8), 0 0 0 7px rgba(115, 205, 50, .10);
+  animation: none;
+}
 .music-btn:active { transform: translateY(0); }
-.music-btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+.music-btn:disabled { opacity: .55; cursor: not-allowed; transform: none; animation: none; }
 .music-icon { width: 19px; height: 19px; flex: 0 0 19px; fill: currentColor; }
 .music-icon .ico-pause { display: none; }
 .music-btn.is-playing .ico-play { display: none; }
 .music-btn.is-playing .ico-pause { display: block; }
 @media (max-width: 680px) {
-  .music-btn { padding: 11px 16px; font-size: 13px; }
+  .cs2-title-row { flex-wrap: nowrap; gap: 8px; align-items: center; }
+  .cs2-title-row .display { font-size: clamp(1.8rem, 8.2vw, 2.4rem); }
+  .music-btn {
+    flex: 0 0 auto;
+    min-width: 140px;
+    gap: 6px;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  .music-icon { width: 15px; height: 15px; flex: 0 0 15px; }
+}
+@media (max-width: 360px) {
+  .cs2-title-row .display { font-size: 1.65rem; }
+  .music-btn { min-width: 100px; padding: 9px 10px; font-size: 11.5px; }
+  .music-icon { width: 14px; height: 14px; flex: 0 0 14px; }
 }
 </style>
 <style>
 .brand-mark img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.brand-copy { display: flex; flex-direction: column; justify-content: center; gap: 1px; line-height: 1.12; }
+.brand-back { color: var(--a); font-size: 10px; font-weight: 800; letter-spacing: .12em; }
+.brand:hover .brand-back { color: var(--ink); }
 </style>
 </head>
 <body class="page-cs2">
@@ -2551,9 +2571,9 @@ body { background: var(--bg); }
 
 <header class="site-header">
     <div class="nav-shell">
-        <a class="brand" href="index.htm" aria-label="卫红易666 首页">
+        <a class="brand" href="index.htm" aria-label="卫红易666 回到主页">
             <span class="brand-mark" aria-hidden="true"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAC1klEQVR4AQyPuY8bdQCF53fN4bHn9Lm2szbZ1WZFBCISSCkogCZIiAYUKiokSgpQGiMqKGkA8QfQQUmXKk2UKEq0G20SJUq8cbweJ7bn9NwzO+OZWPq69z7pPXjv79Gdv0b/jr779fonv33z2X+j72//Mbr758+3fr/xz0/f/vLVpz9cuzr6+vPR9Ws3vvz4xy+uQgRJnheyrF46OOS4iq7rhmHq+mpy+nI+m9OYHOwfDIfDdrMliXKV5SEmrOuHi4U+mZytbZdlOJ6rgAKkUcKz3BZrpWuTaeB4PMNLggIlWel0dkRRIBjXFXnQ7+0NhzudliTUVFFQBYEGII/jTZLyDNuUVEhjtM1adfXyuwcfXnn/nd2+IolSlW+rcrfZ6NSVw4vDjz5478rlw64qyzwHMSxrFbbfbe8NLqiyKIu1qlCFgKKoQqzx3XZj2O/uXeg1JIGAEhQZzM/TLIkiz52fTaPQZ2iyOT8HABGGjZJka1YrDMEUBBuMijhcQ8eyl4vl6fh0djZz1+7zF+Ojo5OXUy3NqZVhv5ppa98Lo9APfcdxbNuGYZTohrVaGixboZmKpq2ePB3fP3784PjR7I3u+onlePbas2xnaZqW60IAMEY0xoSlWY6p1JWGqjYajbaiNFutHYxpzws8P3C9IE7yEhIIIK7VxFazFXjeydGxY5iopBiACYXXprOcvwZFWeRFlhUlRNtr0PRDimYEUer3epf29xWxxiBEABX7rrlcEAQ5momi+HxTlJgkW8sIYt3zM4REdbtFQYiiEVWhUY2j9wb9i4PdLEuDOIo3hZ8VfL0Ngaj4FIooAHm+JCQvSy/wsjyVFbHdaaVZajjrbTspQUY4qirBZwsj44W5GzyeTDc0afa7vcHulnZ3ZwNK2/f9NDXD5LXjexvwcDyFd09OEgpphvn/zZvj6TSI4wJQCOMoTQzLsteuG0a67WgrQ9MtzbDfAgAA//8tzon9AAAABklEQVQDAAGEaFO3pF62AAAAAElFTkSuQmCC" alt="" width="16" height="16"></span>
-            <span class="brand-text">卫红易<em>666</em></span>
+            <span class="brand-copy"><span class="brand-text">卫红易<em>666</em></span><span class="brand-back">回到主页</span></span>
         </a>
         <nav class="nav-links" aria-label="主导航">
             <a href="aboutMe.htm">关于我</a>
