@@ -11,7 +11,7 @@
     <meta property="og:site_name" content="卫红易666">
     <meta property="og:title" content="卫红易666-主页">
     <meta property="og:description" content="惊天大瓜 · 卫红易666 的个人小站">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%2334d399'/%3E%3Cstop offset='.5' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%23a78bfa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%23f8fae6'/%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Ctext x='32' y='44' font-size='34' font-family='PingFang SC,Microsoft YaHei,sans-serif' font-weight='700' text-anchor='middle' fill='url(%23g)'%3E%E5%8D%AB%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAC1klEQVR4AQyPuY8bdQCF53fN4bHn9Lm2szbZ1WZFBCISSCkogCZIiAYUKiokSgpQGiMqKGkA8QfQQUmXKk2UKEq0G20SJUq8cbweJ7bn9NwzO+OZWPq69z7pPXjv79Gdv0b/jr779fonv33z2X+j72//Mbr758+3fr/xz0/f/vLVpz9cuzr6+vPR9Ws3vvz4xy+uQgRJnheyrF46OOS4iq7rhmHq+mpy+nI+m9OYHOwfDIfDdrMliXKV5SEmrOuHi4U+mZytbZdlOJ6rgAKkUcKz3BZrpWuTaeB4PMNLggIlWel0dkRRIBjXFXnQ7+0NhzudliTUVFFQBYEGII/jTZLyDNuUVEhjtM1adfXyuwcfXnn/nd2+IolSlW+rcrfZ6NSVw4vDjz5478rlw64qyzwHMSxrFbbfbe8NLqiyKIu1qlCFgKKoQqzx3XZj2O/uXeg1JIGAEhQZzM/TLIkiz52fTaPQZ2iyOT8HABGGjZJka1YrDMEUBBuMijhcQ8eyl4vl6fh0djZz1+7zF+Ojo5OXUy3NqZVhv5ppa98Lo9APfcdxbNuGYZTohrVaGixboZmKpq2ePB3fP3784PjR7I3u+onlePbas2xnaZqW60IAMEY0xoSlWY6p1JWGqjYajbaiNFutHYxpzws8P3C9IE7yEhIIIK7VxFazFXjeydGxY5iopBiACYXXprOcvwZFWeRFlhUlRNtr0PRDimYEUer3epf29xWxxiBEABX7rrlcEAQ5momi+HxTlJgkW8sIYt3zM4REdbtFQYiiEVWhUY2j9wb9i4PdLEuDOIo3hZ8VfL0Ngaj4FIooAHm+JCQvSy/wsjyVFbHdaaVZajjrbTspQUY4qirBZwsj44W5GzyeTDc0afa7vcHulnZ3ZwNK2/f9NDXD5LXjexvwcDyFd09OEgpphvn/zZvj6TSI4wJQCOMoTQzLsteuG0a67WgrQ9MtzbDfAgAA//8tzon9AAAABklEQVQDAAGEaFO3pF62AAAAAElFTkSuQmCC">
 <link rel="preconnect" href="https://i.ibb.co" crossorigin>
     <script>document.documentElement.classList.remove("no-js");document.documentElement.classList.add("js");</script>
     <style>
@@ -1303,6 +1303,7 @@ body.has-pointer .cursor-glow { opacity: 1; }
 .to-top svg { width: 18px; height: 18px; }
 
 .hidden-box {
+  display: block;
   position: fixed;
   right: 20px;
   top: 50%;
@@ -1310,6 +1311,7 @@ body.has-pointer .cursor-glow { opacity: 1; }
   width: 100px;
   height: 100px;
   background: transparent;
+  opacity: 0;
   cursor: pointer;
 }
 
@@ -2464,12 +2466,7 @@ body { background: var(--bg); }
   50% { box-shadow: 0 20px 40px -18px rgba(115, 205, 50, .78), 0 0 0 7px rgba(115, 205, 50, .08), inset 0 1px 0 rgba(255, 255, 255, .45); }
 }
 
-/* slim, out-of-the-way secret hotspot (still at the right middle) */
-.hidden-box {
-  right: 0;
-  width: 22px;
-  height: 130px;
-}
+/* the secret hotspot stays invisible and covers the right-middle background */
 
 @media (max-width: 360px) {
   .forum-title-row .display { font-size: 1.65rem; }
@@ -2582,7 +2579,7 @@ body { background: var(--bg); }
     </figure>
 </div>
 
-<div class="hidden-box" onclick="window.location.href='superidol.htm';" aria-hidden="true"></div>
+<a class="hidden-box" href="superidol.htm" aria-hidden="true" tabindex="-1"></a>
 
 
 <script>
