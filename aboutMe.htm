@@ -1156,34 +1156,6 @@ body.has-pointer .cursor-glow { opacity: 1; }
 }
 .sound-toggle:hover { background: rgba(34, 211, 238, .22); transform: translateY(-1px); }
 .sound-toggle svg { width: 15px; height: 15px; }
-.cinema-play {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  border: 0;
-  background: rgba(2, 4, 10, .24);
-  cursor: pointer;
-  transition: opacity .35s, visibility .35s;
-}
-.cinema-play.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-.play-orb {
-  width: clamp(68px, 9vw, 96px);
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, .32);
-  border-radius: 50%;
-  background: rgba(8, 15, 28, .55);
-  color: #fff;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 0 12px rgba(255, 255, 255, .045), 0 0 70px -10px rgba(34, 211, 238, .55);
-  transition: transform .3s, background .3s;
-}
-.cinema-play:hover .play-orb { transform: scale(1.07); background: rgba(34, 211, 238, .24); }
-.play-orb svg { width: 34%; height: 34%; margin-left: 6%; }
 .sound-toggle svg { width: 15px; height: 15px; }
 .cinema-caption {
   position: absolute;
@@ -1857,7 +1829,6 @@ body { background: var(--bg); color: var(--ink); }
 }
 .cinema-label .eyebrow .dot { background: #c0cd32; box-shadow: 0 0 12px #c0cd32; }
 .sound-toggle { color: #fff; }
-.play-orb { color: #fff; }
 
 .site-footer {
   background: linear-gradient(180deg, rgba(250, 252, 232, .74), #f3f6de);
@@ -2256,10 +2227,6 @@ body { background: var(--bg); }
   .jump-btn-lg .jump-count { padding: 2px 6px; font-size: 10px; }
 }
 
-/* ---------- cinema play glow in lime ---------- */
-.play-orb {
-  box-shadow: 0 0 0 12px rgba(255, 255, 255, .07), 0 0 70px -10px rgba(115, 205, 50, .60);
-}
 
 /* ============================================================
    SECRET ROOM · 隐藏空间
@@ -2523,11 +2490,6 @@ body { background: var(--bg); }
             <source src="https://vdse.bdstatic.com/192d9a98d782d9c74c96f09db9378d93.mp4" type="video/mp4">
             (你差点被骗了 Never Gonna Give You Up MV)，但是您的浏览器似乎不支持视频标签。
         </video>
-        <button class="cinema-play" type="button" aria-label="播放视频">
-            <span class="play-orb">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11.14-6.86a1 1 0 0 0 0-1.72L9.5 4.28A1 1 0 0 0 8 5.14Z"/></svg>
-            </span>
-        </button>
     </section>
 </main>
 
@@ -2733,27 +2695,13 @@ body { background: var(--bg); }
 (function () {
   'use strict';
   var video = document.querySelector('.cinema video');
-  var play = document.querySelector('.cinema-play');
   if (!video) { return; }
   video.muted = false;
   video.volume = 1;
-
-  function sync() {
-    if (play) { play.classList.toggle('is-hidden', !video.paused); }
-  }
-
-  function start() {
-    var promise = video.play();
-    if (promise && promise.catch) { promise.catch(function () {}); }
-  }
-
-  if (play) {
-    play.addEventListener('click', function () {
-      if (video.paused) { start(); } else { video.pause(); }
-    });
-  }
-  video.addEventListener('play', sync);
-  video.addEventListener('pause', sync);
-  sync();
+  var promise = video.play();
+  if (promise && promise.catch) { promise.catch(function () {}); }
 })();
 
+</script>
+</body>
+</html>
