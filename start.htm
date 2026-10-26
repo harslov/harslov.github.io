@@ -2587,6 +2587,62 @@ body.page-start { background: var(--bg); color: var(--ink); }
   transition: transform .46s var(--ease), opacity .22s ease;
 }
 
+/* ---------- 底部提示（隐藏的页脚把手） ---------- */
+.foot-hint {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  z-index: 54;
+  width: 168px;
+  height: 3px;
+  border-radius: 8px 8px 0 0;
+  background: linear-gradient(90deg, transparent, rgba(115, 205, 50, .45) 22%, rgba(192, 205, 50, .85) 52%, rgba(115, 205, 50, .45) 78%, transparent);
+  box-shadow: 0 -1px 14px rgba(115, 205, 50, .35);
+  transform: translateX(-50%);
+  opacity: .55;
+  pointer-events: none;
+  transition: opacity .35s ease, transform .45s var(--ease);
+}
+.footer-visible .foot-hint { opacity: 0; transform: translateX(-50%) translateY(100%); }
+.foot-hint::after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  width: 2px;
+  height: 10px;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(0deg, rgba(115, 205, 50, .7), transparent);
+  transform: translateX(-50%);
+  opacity: .5;
+  animation: hintRise 3.6s ease-in-out infinite;
+}
+@keyframes hintRise {
+  0%, 100% { opacity: .22; transform: translateX(-50%) translateY(0); }
+  50% { opacity: .78; transform: translateX(-50%) translateY(-3px); }
+}
+
+/* ---------- 底栏：默认隐藏，鼠标到底 / 键盘聚焦 / 轻触时滑入 ---------- */
+.page-start .start-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 55;
+  margin-top: 0;
+  transform: translate3d(0, calc(100% + 14px), 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .46s var(--ease), opacity .3s ease;
+}
+.page-start .start-footer.foot-open,
+.page-start .start-footer:focus-within {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  pointer-events: auto;
+  transition: transform .46s var(--ease), opacity .22s ease;
+}
+
 /* ---------- 主体 ---------- */
 .start-main {
   position: relative;
@@ -2959,6 +3015,7 @@ body.page-start { background: var(--bg); color: var(--ink); }
 
 <div class="site">
 <div class="nav-hint" aria-hidden="true"></div>
+<div class="foot-hint" aria-hidden="true"></div>
 
 <header class="site-header" id="siteHeader">
     <div class="nav-shell">
@@ -3008,7 +3065,7 @@ body.page-start { background: var(--bg); color: var(--ink); }
     </div>
 </main>
 
-<footer class="site-footer start-footer">
+<footer class="site-footer start-footer" id="siteFooter">
     <div class="footer-inner">
         <div class="footer-brand">卫红易666 · HARSLOV.GITHUB.IO</div>
         <nav class="footer-nav" aria-label="页脚导航">
@@ -3106,13 +3163,21 @@ body.page-start { background: var(--bg); color: var(--ink); }
         if (event.sourceCapabilities && event.sourceCapabilities.firesTouchEvents) { return; }
         if (Date.now() - lastTouchAt < 700) { return; }
         var y = typeof event.clientY === 'number' ? event.clientY : 0;
+        var vh = window.innerHeight;
+
         if (y <= 48) {
             showNav();
-            return;
+        } else if (navOpen) {
+            var rect = header.getBoundingClientRect();
+            if (y > rect.bottom + 8) { hideNav(); }
         }
-        if (!navOpen) { return; }
-        var rect = header.getBoundingClientRect();
-        if (y > rect.bottom + 8) { hideNav(); }
+
+        if (y >= vh - 48) {
+            showFooter();
+        } else if (footOpen) {
+            var frect = footer.getBoundingClientRect();
+            if (y < frect.top - 8) { hideFooter(); }
+        }
     }
     window.addEventListener('mousemove', onPointerMove, { passive: true });
 
@@ -3142,7 +3207,44 @@ body.page-start { background: var(--bg); color: var(--ink); }
         } else if (navOpen) {
             hideNav();
         }
+        if (footer.contains(event.target)) { return; }
+        if (touch.clientY >= window.innerHeight - 48) {
+            if (footOpen) { hideFooter(); } else { showFooter(); }
+        } else if (footOpen) {
+            hideFooter();
+        }
     }, { passive: true });
+
+    /* ---------------- 底部页脚：自动滑入 / 滑出 ---------------- */
+    var footer = document.getElementById('siteFooter');
+    var footOpen = false;
+    var pointerInFooter = false;
+
+    function showFooter() {
+        if (footOpen) { return; }
+        footOpen = true;
+        footer.classList.add('foot-open');
+        document.body.classList.add('footer-visible');
+    }
+    function hideFooter() {
+        if (!footOpen) { return; }
+        footOpen = false;
+        footer.classList.remove('foot-open');
+        document.body.classList.remove('footer-visible');
+    }
+
+    footer.addEventListener('mouseenter', function () { pointerInFooter = true; });
+    footer.addEventListener('mouseleave', function () {
+        pointerInFooter = false;
+        if (document.activeElement && footer.contains(document.activeElement)) { return; }
+        hideFooter();
+    });
+    footer.addEventListener('focusin', showFooter);
+    footer.addEventListener('focusout', function (event) {
+        if (footer.contains(event.relatedTarget)) { return; }
+        if (pointerInFooter) { return; }
+        hideFooter();
+    });
 
     /* ---------------- 搜索引擎 ---------------- */
     var LS_ENGINE = 'harslov.start.engine.v1';
@@ -3471,6 +3573,7 @@ body.page-start { background: var(--bg); color: var(--ink); }
             return;
         }
         if (navOpen) { hideNav(); }
+        if (footOpen) { hideFooter(); }
     });
 
     /* ---------------- 光标光晕 ---------------- */
