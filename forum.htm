@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="base-uri 'self'; object-src 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com; connect-src 'self' https://*.asia-southeast1.firebasedatabase.app wss://*.asia-southeast1.firebasedatabase.app https://*.firebaseio.com wss://*.firebaseio.com https://www.gstatic.com https://api64.ipify.org; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="keywords" content="卫红易,卫鸿毅,易卫红,CS2,卫红易论坛,卫红易666,平和,Github,股市,财经,股市行情,投资,饰品,游戏,射击游戏,开户,教程,游戏教程,游戏交流,论坛">
     <meta name="description" content="卫红易666">
     <meta name="theme-color" content="#f8fae6">
@@ -2497,21 +2499,6 @@ body { background: var(--bg); }
 .brand-back { color: var(--a); font-size: 10px; font-weight: 800; letter-spacing: .12em; }
 .brand:hover .brand-back { color: var(--ink); }
 </style>
-<style>
-/* ---------- comment posting warning ---------- */
-.comment-note {
-  margin: 20px 0 0;
-  padding-top: 16px;
-  border-top: 1px dashed var(--line);
-  color: var(--faint);
-  font-size: 12px;
-  letter-spacing: .02em;
-  text-align: center;
-}
-@media (max-width: 680px) {
-  .comment-note { margin-top: 16px; padding-top: 13px; font-size: 11px; }
-}
-</style>
 </head>
 <body class="page-forum">
 <a class="skip-link" href="#main">跳到主要内容</a>
@@ -2585,9 +2572,9 @@ body { background: var(--bg); }
 
             <article class="guest-card reveal" style="--d:160ms">
                 <div class="guest-media">
-                    <a class="shot-btn profile-link" href="https://bgm.tv/user/maoha1" target="_blank" rel="noopener" aria-label="maoHa1 的 bangumi 个人主页">
+                    <a class="shot-btn profile-link" href="https://bgm.tv/user/maoha1" target="_blank" rel="noopener noreferrer" aria-label="maoHa1 的 bangumi 个人主页">
                         <span class="avatar-fallback" aria-hidden="true">M</span>
-                        <img src="https://bgm.tv/chart/img/675334" alt="maoHa1 的个人主页" title="maoHa1" loading="lazy" decoding="async" onerror="this.closest('.guest-card').classList.add('img-failed');">
+                        <img src="https://bgm.tv/chart/img/675334" alt="maoHa1 的个人主页" title="maoHa1" loading="lazy" decoding="async">
                         <span class="shot-badge">03</span>
                         <span class="shot-caption"><span class="shot-open">bangumi ↗</span></span>
                     </a>
@@ -2600,9 +2587,9 @@ body { background: var(--bg); }
 
             <article class="guest-card reveal" style="--d:240ms">
                 <div class="guest-media">
-                    <a class="shot-btn profile-link" href="https://bgm.tv/user/astlj" target="_blank" rel="noopener" aria-label="ASTLJ 的 bangumi 个人主页">
+                    <a class="shot-btn profile-link" href="https://bgm.tv/user/astlj" target="_blank" rel="noopener noreferrer" aria-label="ASTLJ 的 bangumi 个人主页">
                         <span class="avatar-fallback" aria-hidden="true">A</span>
-                        <img src="https://bgm.tv/chart/img/924040" alt="ASTLJ 的个人主页" title="ASTLJ" loading="lazy" decoding="async" onerror="this.closest('.guest-card').classList.add('img-failed');">
+                        <img src="https://bgm.tv/chart/img/924040" alt="ASTLJ 的个人主页" title="ASTLJ" loading="lazy" decoding="async">
                         <span class="shot-badge">04</span>
                         <span class="shot-caption"><span class="shot-open">bangumi ↗</span></span>
                     </a>
@@ -2650,10 +2637,10 @@ body { background: var(--bg); }
             </div>
             <div class="comment-form">
                 <label class="sr-only" for="comment-input">评论区：</label>
-                <textarea id="comment-input" class="comment-box" placeholder="写下你的评论..." maxlength="2000"></textarea>
+                <textarea id="comment-input" class="comment-box" placeholder="写下你的评论..." maxlength="2000" autocomplete="off" autocapitalize="off" spellcheck="true" aria-describedby="formStatus"></textarea>
                 <div class="form-foot">
                     <span class="form-status" id="formStatus" role="status" aria-live="polite">匿名，请友善发言，发布内容无法撤回，请确认无误后再发布。</span>
-                    <button class="btn-primary comment-button" type="button" onclick="addComment()">发表评论</button>
+                    <button class="btn-primary comment-button" type="button" id="commentSubmit">发表评论</button>
                 </div>
             </div>
             <div class="comment-empty" id="commentEmpty">还没有评论，来抢沙发吧。</div>
@@ -2878,11 +2865,17 @@ window.addComment = window.addComment || function () {
   var s = document.getElementById('formStatus');
   if (s) { s.textContent = '评论系统加载中，请稍后再试。'; s.className = 'form-status is-error'; }
 };
+(function () {
+  var btn = document.getElementById('commentSubmit');
+  if (btn) {
+    btn.addEventListener('click', function () { window.addComment(); });
+  }
+})();
 </script>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getDatabase, ref, push, onValue, query, orderByChild } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+    import { getDatabase, ref, push, onValue, query, orderByChild, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCJM56oi4XUqLXJIY5dOyXIwig5EDfzKxg",
@@ -2906,9 +2899,73 @@ window.addComment = window.addComment || function () {
     let totalPages = 1;
     let sending = false;
 
-    fetch("https://api64.ipify.org?format=json")
+    const MAX_COMMENT_LENGTH = 2000;
+    const MAX_RENDER_LENGTH = 2000;
+    const COMMENT_COOLDOWN_MS = 30000;
+    const COOLDOWN_KEY = "why666:last-comment-at";
+
+    // 只保留可显示的纯文本：去掉控制字符/零宽字符/RTL 覆盖字符，限制长度。
+    // 评论最终用 textContent 写入 DOM，因此这里不需要做 HTML 实体编码。
+    function cleanText(value, maxLength) {
+      return String(value == null ? "" : value)
+          .replace(/\r\n?/g, "\n")
+          .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
+          .replace(/[\u200B-\u200F\u202A-\u202E\u2066-\u2069]/g, "")
+          .trim()
+          .slice(0, maxLength);
+    }
+
+    function cleanIp(value) {
+      const ip = cleanText(value, 45);
+      if (!ip) { return "未知IP"; }
+      const ipv4 = /^(?:\d{1,3}\.){3}\d{1,3}$/;
+      const ipv6 = /^[0-9a-f:.]+$/i;
+      if (ipv4.test(ip) || (ip.indexOf(":") !== -1 && ipv6.test(ip))) { return ip; }
+      return "未知IP";
+    }
+
+    function formatCommentTime(comment) {
+      const ts = Number(comment && comment.timestamp);
+      if (Number.isFinite(ts) && ts > 0) {
+        try {
+          return new Date(ts).toLocaleString("zh-CN", { hour12: false });
+        } catch (error) {
+          // 回退到旧数据里的 time 字段
+        }
+      }
+      return cleanText(comment && comment.time, 40);
+    }
+
+    // 数据库是公开可写的，读取时也要按不可信数据处理：只接受字符串并重新限长。
+    function normalizeComment(raw) {
+      if (!raw || typeof raw !== "object" || typeof raw.text !== "string") { return null; }
+      const text = cleanText(raw.text, MAX_RENDER_LENGTH);
+      if (!text) { return null; }
+      return {
+        text: text,
+        ip: cleanIp(raw.ip),
+        time: formatCommentTime(raw),
+        timestamp: Number(raw.timestamp) || 0
+      };
+    }
+
+    function cooldownLeft() {
+      try {
+        const last = Number(window.localStorage.getItem(COOLDOWN_KEY));
+        if (!Number.isFinite(last)) { return 0; }
+        return Math.max(0, COMMENT_COOLDOWN_MS - (Date.now() - last));
+      } catch (error) {
+        return 0;
+      }
+    }
+
+    function markCooldown() {
+      try { window.localStorage.setItem(COOLDOWN_KEY, String(Date.now())); } catch (error) {}
+    }
+
+    fetch("https://api64.ipify.org?format=json", { cache: "no-store" })
         .then((response) => response.json())
-        .then((data) => { userIP = data.ip; })
+        .then((data) => { userIP = cleanIp(data && data.ip); })
         .catch(() => { userIP = "未知IP"; });
 
     const commentInput = document.getElementById("comment-input");
@@ -2916,7 +2973,7 @@ window.addComment = window.addComment || function () {
     const commentCount = document.getElementById("commentCount");
     const commentEmpty = document.getElementById("commentEmpty");
     const formStatus = document.getElementById("formStatus");
-    const submitBtn = document.querySelector(".comment-button");
+    const submitBtn = document.getElementById("commentSubmit");
     const pager = document.getElementById("commentPager");
     const pagerInfo = document.getElementById("pagerInfo");
     const jumpCount = document.getElementById("jumpCount");
@@ -3004,21 +3061,25 @@ window.addComment = window.addComment || function () {
       const pageItems = list.slice(start, start + PAGE_SIZE);
 
       commentList.textContent = "";
-      pageItems.forEach(function (comment) {
+      pageItems.forEach(function (rawComment) {
+        const comment = normalizeComment(rawComment);
+        if (!comment) { return; }
         const li = document.createElement("li");
         const top = document.createElement("div");
         top.className = "c-top";
         const ip = document.createElement("span");
         ip.className = "c-ip";
-        ip.textContent = "[" + (comment.ip || "未知IP") + "]";
+        ip.textContent = "[" + comment.ip + "]";
         const time = document.createElement("span");
         time.className = "c-time";
-        time.textContent = comment.time || "";
+        time.textContent = comment.time;
         top.appendChild(ip);
         top.appendChild(time);
         const text = document.createElement("p");
         text.className = "c-text";
-        text.textContent = comment.text || "";
+        text.dir = "auto";
+        // 关键：用户数据只通过 textContent 写入，绝不使用 innerHTML。
+        text.textContent = comment.text;
         li.appendChild(top);
         li.appendChild(text);
         commentList.appendChild(li);
@@ -3059,8 +3120,10 @@ window.addComment = window.addComment || function () {
     onValue(query(commentsRef, orderByChild("timestamp")), (snapshot) => {
       const commentsArray = [];
       snapshot.forEach((childSnapshot) => {
-        commentsArray.unshift(childSnapshot.val());
+        const comment = normalizeComment(childSnapshot.val());
+        if (comment) { commentsArray.push(comment); }
       });
+      commentsArray.sort(function (a, b) { return b.timestamp - a.timestamp; });
       renderComments(commentsArray);
     }, (error) => {
       console.error("评论加载失败:", error);
@@ -3070,12 +3133,17 @@ window.addComment = window.addComment || function () {
       if (pagerInfo) { pagerInfo.textContent = "评论加载失败"; }
     });
 
-    window.addComment = () => {
-      if (sending) return;
-      const text = commentInput.value.trim();
-      if (text === "") {
+    window.addComment = function () {
+      if (sending) { return; }
+      const text = cleanText(commentInput.value, MAX_COMMENT_LENGTH);
+      if (!text) {
         commentInput.focus();
         setStatus("先写点什么再发表吧。", "error");
+        return;
+      }
+      const wait = cooldownLeft();
+      if (wait > 0) {
+        setStatus("评论太频繁，请 " + Math.ceil(wait / 1000) + " 秒后再试。", "error");
         return;
       }
       sending = true;
@@ -3083,12 +3151,13 @@ window.addComment = window.addComment || function () {
       setStatus("发表中…");
       const commentData = {
         text: text,
-        time: new Date().toLocaleString(),
-        timestamp: Date.now(),
-        ip: userIP
+        // 用服务器时间而不是客户端时间，避免伪造时间/排序。
+        timestamp: serverTimestamp(),
+        ip: cleanIp(userIP)
       };
       push(commentsRef, commentData)
           .then(() => {
+            markCooldown();
             commentInput.value = "";
             setStatus("发表成功！", "ok");
             currentPage = 1;
