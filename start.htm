@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#f8fae6">
-    <meta name="color-scheme" content="light">
+    <meta name="color-scheme" content="only light">
     <meta name="description" content="卫红易666 起始页：实时时钟与中文日期，支持必应、百度、谷歌、Yandex 及自定义搜索引擎的极简搜索。">
     <meta name="keywords" content="卫红易,卫红易666,起始页,搜索,必应,百度,谷歌,Yandex,自定义搜索引擎">
     <title>卫红易666-起始页</title>
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="卫红易666">
     <meta property="og:title" content="起始页 · 卫红易666">
-    <meta property="og:description" content="实时时钟与多引擎搜索的极简起始页。">
+    <meta property="og:description" content="极简起始页">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAC1klEQVR4AQyPuY8bdQCF53fN4bHn9Lm2szbZ1WZFBCISSCkogCZIiAYUKiokSgpQGiMqKGkA8QfQQUmXKk2UKEq0G20SJUq8cbweJ7bn9NwzO+OZWPq69z7pPXjv79Gdv0b/jr779fonv33z2X+j72//Mbr758+3fr/xz0/f/vLVpz9cuzr6+vPR9Ws3vvz4xy+uQgRJnheyrF46OOS4iq7rhmHq+mpy+nI+m9OYHOwfDIfDdrMliXKV5SEmrOuHi4U+mZytbZdlOJ6rgAKkUcKz3BZrpWuTaeB4PMNLggIlWel0dkRRIBjXFXnQ7+0NhzudliTUVFFQBYEGII/jTZLyDNuUVEhjtM1adfXyuwcfXnn/nd2+IolSlW+rcrfZ6NSVw4vDjz5478rlw64qyzwHMSxrFbbfbe8NLqiyKIu1qlCFgKKoQqzx3XZj2O/uXeg1JIGAEhQZzM/TLIkiz52fTaPQZ2iyOT8HABGGjZJka1YrDMEUBBuMijhcQ8eyl4vl6fh0djZz1+7zF+Ojo5OXUy3NqZVhv5ppa98Lo9APfcdxbNuGYZTohrVaGixboZmKpq2ePB3fP3784PjR7I3u+onlePbas2xnaZqW60IAMEY0xoSlWY6p1JWGqjYajbaiNFutHYxpzws8P3C9IE7yEhIIIK7VxFazFXjeydGxY5iopBiACYXXprOcvwZFWeRFlhUlRNtr0PRDimYEUer3epf29xWxxiBEABX7rrlcEAQ5momi+HxTlJgkW8sIYt3zM4REdbtFQYiiEVWhUY2j9wb9i4PdLEuDOIo3hZ8VfL0Ngaj4FIooAHm+JCQvSy/wsjyVFbHdaaVZajjrbTspQUY4qirBZwsj44W5GzyeTDc0afa7vcHulnZ3ZwNK2/f9NDXD5LXjexvwcDyFd09OEgpphvn/zZvj6TSI4wJQCOMoTQzLsteuG0a67WgrQ9MtzbDfAgAA//8tzon9AAAABklEQVQDAAGEaFO3pF62AAAAAElFTkSuQmCC">
     <script>document.documentElement.classList.remove("no-js"); document.documentElement.classList.add("js");</script>
 <style>
@@ -1458,7 +1458,7 @@ body.has-pointer .cursor-glow { opacity: 1; }
   .to-top { right: 14px; bottom: 14px; width: 42px; height: 42px; }
 }
 @media (max-width: 420px) {
-  .brand-text { display: none; }
+  .brand-text { font-size: 15px; }
   .nav-links a { font-size: 12.5px; }
   .selfie-card { padding: 8px; border-radius: 26px; }
   .selfie-media { border-radius: 19px; }
@@ -2490,9 +2490,6 @@ body { background: var(--bg); }
     </style>
 <style>
 .brand-mark img { width: 100%; height: 100%; display: block; object-fit: cover; }
-.brand-copy { display: flex; flex-direction: column; justify-content: center; gap: 1px; line-height: 1.12; }
-.brand-back { color: var(--a); font-size: 10px; font-weight: 800; letter-spacing: .12em; }
-.brand:hover .brand-back { color: var(--ink); }
 </style>
 <style>
 /* ---------- comment posting warning ---------- */
@@ -2531,6 +2528,9 @@ body { background: var(--bg); }
 }
 
 body.page-start { background: var(--bg); color: var(--ink); }
+
+/* 顶部 / 底部滑动用于呼出栏，关闭下拉刷新以免手势冲突 */
+html { overscroll-behavior-y: none; }
 
 /* ---------- 顶部提示（隐藏的导航把手） ---------- */
 .nav-hint {
@@ -3003,6 +3003,58 @@ body.page-start { background: var(--bg); color: var(--ink); }
   .search-form { padding: 4px; }
 }
 </style>
+<style>
+/* ============================================================
+   深色模式保护
+   页面固定声明浅色配色，避免手机浏览器自动反色后
+   顶栏「卫红易666」与背景同色而看不见。
+   ============================================================ */
+:root { color-scheme: only light; }
+
+.brand-text { color: var(--ink); }
+.brand-text em {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #6d820e;
+}
+
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+  .brand-text em {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    color: #6d820e;
+  }
+}
+
+@media (forced-colors: active) {
+  .brand-text em {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    color: CanvasText;
+  }
+}
+
+/* 个别浏览器忽略 color-scheme 仍强制反色时，保证顶栏始终清晰可读 */
+@media (prefers-color-scheme: dark) {
+  .site-header {
+    background: linear-gradient(180deg, rgba(250, 252, 232, .96), rgba(250, 252, 232, .84));
+    border-bottom-color: rgba(92, 105, 24, .16);
+  }
+  .brand-text { color: #2a340c; }
+  .brand-text em { color: #6d820e; }
+  .nav-links { background: rgba(255, 255, 255, .62); }
+  .nav-links a { color: #4f5c0a; }
+  .nav-links a:hover { color: #2a340c; }
+  .nav-links a.active { color: #28320a; }
+}
+
+/* 手机小屏：五个导航项也能排在一行 */
+@media (max-width: 380px) {
+  .nav-links a { font-size: 11.5px; padding: 8px 5px; white-space: nowrap; }
+}
+</style>
 </head>
 <body class="page-start">
 <a class="skip-link" href="#main">跳到主要内容</a>
@@ -3019,11 +3071,12 @@ body.page-start { background: var(--bg); color: var(--ink); }
 
 <header class="site-header" id="siteHeader">
     <div class="nav-shell">
-        <a class="brand" href="index.htm" aria-label="卫红易666 回到主页">
+        <a class="brand" href="index.htm" aria-label="卫红易666 首页">
             <span class="brand-mark" aria-hidden="true"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAC1klEQVR4AQyPuY8bdQCF53fN4bHn9Lm2szbZ1WZFBCISSCkogCZIiAYUKiokSgpQGiMqKGkA8QfQQUmXKk2UKEq0G20SJUq8cbweJ7bn9NwzO+OZWPq69z7pPXjv79Gdv0b/jr779fonv33z2X+j72//Mbr758+3fr/xz0/f/vLVpz9cuzr6+vPR9Ws3vvz4xy+uQgRJnheyrF46OOS4iq7rhmHq+mpy+nI+m9OYHOwfDIfDdrMliXKV5SEmrOuHi4U+mZytbZdlOJ6rgAKkUcKz3BZrpWuTaeB4PMNLggIlWel0dkRRIBjXFXnQ7+0NhzudliTUVFFQBYEGII/jTZLyDNuUVEhjtM1adfXyuwcfXnn/nd2+IolSlW+rcrfZ6NSVw4vDjz5478rlw64qyzwHMSxrFbbfbe8NLqiyKIu1qlCFgKKoQqzx3XZj2O/uXeg1JIGAEhQZzM/TLIkiz52fTaPQZ2iyOT8HABGGjZJka1YrDMEUBBuMijhcQ8eyl4vl6fh0djZz1+7zF+Ojo5OXUy3NqZVhv5ppa98Lo9APfcdxbNuGYZTohrVaGixboZmKpq2ePB3fP3784PjR7I3u+onlePbas2xnaZqW60IAMEY0xoSlWY6p1JWGqjYajbaiNFutHYxpzws8P3C9IE7yEhIIIK7VxFazFXjeydGxY5iopBiACYXXprOcvwZFWeRFlhUlRNtr0PRDimYEUer3epf29xWxxiBEABX7rrlcEAQ5momi+HxTlJgkW8sIYt3zM4REdbtFQYiiEVWhUY2j9wb9i4PdLEuDOIo3hZ8VfL0Ngaj4FIooAHm+JCQvSy/wsjyVFbHdaaVZajjrbTspQUY4qirBZwsj44W5GzyeTDc0afa7vcHulnZ3ZwNK2/f9NDXD5LXjexvwcDyFd09OEgpphvn/zZvj6TSI4wJQCOMoTQzLsteuG0a67WgrQ9MtzbDfAgAA//8tzon9AAAABklEQVQDAAGEaFO3pF62AAAAAElFTkSuQmCC" alt="" width="16" height="16"></span>
-            <span class="brand-copy"><span class="brand-text">卫红易<em>666</em></span><span class="brand-back">回到主页</span></span>
+            <span class="brand-text">卫红易<em>666</em></span>
         </a>
         <nav class="nav-links" aria-label="主导航">
+            <a href="https://harslov.github.io/index.htm">首页</a>
             <a href="start.htm" class="active" aria-current="page">起始页</a>
             <a href="aboutMe.htm">关于我</a>
             <a href="forum.htm">论坛</a>
@@ -3138,11 +3191,25 @@ body.page-start { background: var(--bg); color: var(--ink); }
     }
     tickClock();
 
-    /* ---------------- 顶部导航：自动滑入 / 滑出 ---------------- */
+    /* ---------------- 顶部导航 / 底部页脚：滑入 / 滑出 ---------------- */
     var header = document.getElementById('siteHeader');
+    var footer = document.getElementById('siteFooter');
     var navOpen = false;
+    var footOpen = false;
     var pointerInHeader = false;
+    var pointerInFooter = false;
     var lastTouchAt = 0;
+    var canHover = window.matchMedia ? window.matchMedia('(hover: hover) and (pointer: fine)').matches : true;
+
+    /* 手机端：顶部 / 底部边缘的触发区域。
+       第一次点击或滑动只负责呼出栏，同一次手势产生的点击会被拦截，
+       避免呼出栏的同时误触栏内的按钮。电脑端不受影响。 */
+    var TRIGGER_ZONE = 64;
+    var revealGuardUntil = 0;
+
+    function guardRevealClick() {
+        revealGuardUntil = Date.now() + 400;
+    }
 
     function showNav() {
         if (navOpen) { return; }
@@ -3156,8 +3223,34 @@ body.page-start { background: var(--bg); color: var(--ink); }
         header.classList.remove('nav-open');
         document.body.classList.remove('nav-visible');
     }
+    function showFooter() {
+        if (footOpen) { return; }
+        footOpen = true;
+        footer.classList.add('foot-open');
+        document.body.classList.add('footer-visible');
+    }
+    function hideFooter() {
+        if (!footOpen) { return; }
+        footOpen = false;
+        footer.classList.remove('foot-open');
+        document.body.classList.remove('footer-visible');
+    }
+
+    /* 呼出栏的那一次点击不触发任何按钮（仅触摸时生效） */
+    document.addEventListener('click', function (event) {
+        if (Date.now() > revealGuardUntil) { return; }
+        if (Date.now() - lastTouchAt > 800) { return; }
+        var y = event.clientY;
+        if (typeof y !== 'number') { return; }
+        if (y <= TRIGGER_ZONE || y >= window.innerHeight - TRIGGER_ZONE) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    }, true);
 
     function onPointerMove(event) {
+        /* 只有真正带指针的桌面设备才启用“鼠标移到顶部/底部呼出” */
+        if (!canHover) { return; }
         if (event.pointerType === 'touch') { return; }
         /* 忽略触摸后浏览器补发的鼠标事件，避免轻触隐藏后又被立刻唤醒 */
         if (event.sourceCapabilities && event.sourceCapabilities.firesTouchEvents) { return; }
@@ -3194,45 +3287,6 @@ body.page-start { background: var(--bg); color: var(--ink); }
         hideNav();
     });
 
-    document.addEventListener('touchstart', function (event) {
-        lastTouchAt = Date.now();
-        var touch = event.touches && event.touches[0];
-        if (!touch) { return; }
-        if (header.contains(event.target)) {
-            if (!(event.target.closest && event.target.closest('a, button'))) { hideNav(); }
-            return;
-        }
-        if (touch.clientY <= 48) {
-            if (navOpen) { hideNav(); } else { showNav(); }
-        } else if (navOpen) {
-            hideNav();
-        }
-        if (footer.contains(event.target)) { return; }
-        if (touch.clientY >= window.innerHeight - 48) {
-            if (footOpen) { hideFooter(); } else { showFooter(); }
-        } else if (footOpen) {
-            hideFooter();
-        }
-    }, { passive: true });
-
-    /* ---------------- 底部页脚：自动滑入 / 滑出 ---------------- */
-    var footer = document.getElementById('siteFooter');
-    var footOpen = false;
-    var pointerInFooter = false;
-
-    function showFooter() {
-        if (footOpen) { return; }
-        footOpen = true;
-        footer.classList.add('foot-open');
-        document.body.classList.add('footer-visible');
-    }
-    function hideFooter() {
-        if (!footOpen) { return; }
-        footOpen = false;
-        footer.classList.remove('foot-open');
-        document.body.classList.remove('footer-visible');
-    }
-
     footer.addEventListener('mouseenter', function () { pointerInFooter = true; });
     footer.addEventListener('mouseleave', function () {
         pointerInFooter = false;
@@ -3245,6 +3299,76 @@ body.page-start { background: var(--bg); color: var(--ink); }
         if (pointerInFooter) { return; }
         hideFooter();
     });
+
+    /* ---------------- 触摸：点击 / 滑动边缘呼出顶栏与底栏 ---------------- */
+    var touchStart = null;
+
+    function revealNavByTouch() {
+        showNav();
+        guardRevealClick();
+        touchStart = null;
+    }
+    function revealFooterByTouch() {
+        showFooter();
+        guardRevealClick();
+        touchStart = null;
+    }
+
+    document.addEventListener('touchstart', function (event) {
+        lastTouchAt = Date.now();
+        var touch = event.touches && event.touches[0];
+        if (!touch) { return; }
+        touchStart = { x: touch.clientX, y: touch.clientY };
+
+        if (header.contains(event.target)) {
+            if (!(event.target.closest && event.target.closest('a, button'))) { hideNav(); }
+            return;
+        }
+        if (footer.contains(event.target)) {
+            if (!(event.target.closest && event.target.closest('a, button'))) { hideFooter(); }
+            return;
+        }
+
+        var y = touch.clientY;
+        var vh = window.innerHeight;
+
+        /* 顶部：第一次点击只呼出顶栏，不触发按钮 */
+        if (y <= TRIGGER_ZONE) {
+            if (!navOpen) { revealNavByTouch(); } else { hideNav(); }
+        } else if (navOpen) {
+            hideNav();
+        }
+
+        /* 底部：第一次点击只呼出底栏，不触发按钮 */
+        if (y >= vh - TRIGGER_ZONE) {
+            if (!footOpen) { revealFooterByTouch(); } else { hideFooter(); }
+        } else if (footOpen) {
+            hideFooter();
+        }
+    }, { passive: true });
+
+    document.addEventListener('touchmove', function (event) {
+        if (!touchStart) { return; }
+        var touch = event.touches && event.touches[0];
+        if (!touch) { return; }
+        var dy = touch.clientY - touchStart.y;
+        var dx = touch.clientX - touchStart.x;
+        if (Math.abs(dy) < 26) { return; }
+        if (Math.abs(dx) > Math.abs(dy) * 1.5) { return; }
+
+        var vh = window.innerHeight;
+        /* 顶部向下滑：呼出顶栏 */
+        if (dy > 0 && touchStart.y <= TRIGGER_ZONE && !navOpen) {
+            revealNavByTouch();
+        }
+        /* 底部向上滑：呼出底栏 */
+        if (dy < 0 && touchStart.y >= vh - TRIGGER_ZONE && !footOpen) {
+            revealFooterByTouch();
+        }
+    }, { passive: true });
+
+    document.addEventListener('touchend', function () { touchStart = null; }, { passive: true });
+    document.addEventListener('touchcancel', function () { touchStart = null; }, { passive: true });
 
     /* ---------------- 搜索引擎 ---------------- */
     var LS_ENGINE = 'harslov.start.engine.v1';
