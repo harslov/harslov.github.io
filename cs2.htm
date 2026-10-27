@@ -6,6 +6,7 @@
     <meta name="keywords" content="卫红易,卫鸿毅,易卫红,CS2,卫红易论坛,卫红易666,平和,Github,股市,财经,股市行情,投资,饰品,游戏,射击游戏,开户,教程,游戏教程,游戏交流,论坛">
     <meta name="description" content="卫红易666">
     <meta name="theme-color" content="#f8fae6">
+    <meta name="color-scheme" content="only light">
     <title>卫红易666-CS2</title>
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="卫红易666">
@@ -1458,7 +1459,7 @@ body.has-pointer .cursor-glow { opacity: 1; }
   .to-top { right: 14px; bottom: 14px; width: 42px; height: 42px; }
 }
 @media (max-width: 420px) {
-  .brand-text { display: none; }
+  .brand-text { font-size: 15px; }
   .nav-links a { font-size: 12.5px; }
   .selfie-card { padding: 8px; border-radius: 26px; }
   .selfie-media { border-radius: 19px; }
@@ -2524,9 +2525,58 @@ body { background: var(--bg); }
 </style>
 <style>
 .brand-mark img { width: 100%; height: 100%; display: block; object-fit: cover; }
-.brand-copy { display: flex; flex-direction: column; justify-content: center; gap: 1px; line-height: 1.12; }
-.brand-back { color: var(--a); font-size: 10px; font-weight: 800; letter-spacing: .12em; }
-.brand:hover .brand-back { color: var(--ink); }
+</style>
+<style>
+/* ============================================================
+   深色模式保护
+   页面固定声明浅色配色，避免手机浏览器自动反色后
+   顶栏「卫红易666」与背景同色而看不见。
+   ============================================================ */
+:root { color-scheme: only light; }
+
+.brand-text { color: var(--ink); }
+.brand-text em {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #6d820e;
+}
+
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+  .brand-text em {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    color: #6d820e;
+  }
+}
+
+@media (forced-colors: active) {
+  .brand-text em {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    color: CanvasText;
+  }
+}
+
+/* 个别浏览器忽略 color-scheme 仍强制反色时，保证顶栏始终清晰可读 */
+@media (prefers-color-scheme: dark) {
+  .site-header {
+    background: linear-gradient(180deg, rgba(250, 252, 232, .96), rgba(250, 252, 232, .84));
+    border-bottom-color: rgba(92, 105, 24, .16);
+  }
+  .brand-text { color: #2a340c; }
+  .brand-text em { color: #6d820e; }
+  .nav-links { background: rgba(255, 255, 255, .62); }
+  .nav-links a { color: #4f5c0a; }
+  .nav-links a:hover { color: #2a340c; }
+  .nav-links a.active { color: #28320a; }
+}
+
+/* 手机小屏：五个导航项也能排在一行 */
+@media (max-width: 380px) {
+  .nav-links a { font-size: 11.5px; padding: 8px 5px; white-space: nowrap; }
+}
 </style>
 </head>
 <body class="page-cs2">
@@ -2542,11 +2592,12 @@ body { background: var(--bg); }
 
 <header class="site-header">
     <div class="nav-shell">
-        <a class="brand" href="index.htm" aria-label="卫红易666 回到主页">
+        <a class="brand" href="index.htm" aria-label="卫红易666 首页">
             <span class="brand-mark" aria-hidden="true"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAC1klEQVR4AQyPuY8bdQCF53fN4bHn9Lm2szbZ1WZFBCISSCkogCZIiAYUKiokSgpQGiMqKGkA8QfQQUmXKk2UKEq0G20SJUq8cbweJ7bn9NwzO+OZWPq69z7pPXjv79Gdv0b/jr779fonv33z2X+j72//Mbr758+3fr/xz0/f/vLVpz9cuzr6+vPR9Ws3vvz4xy+uQgRJnheyrF46OOS4iq7rhmHq+mpy+nI+m9OYHOwfDIfDdrMliXKV5SEmrOuHi4U+mZytbZdlOJ6rgAKkUcKz3BZrpWuTaeB4PMNLggIlWel0dkRRIBjXFXnQ7+0NhzudliTUVFFQBYEGII/jTZLyDNuUVEhjtM1adfXyuwcfXnn/nd2+IolSlW+rcrfZ6NSVw4vDjz5478rlw64qyzwHMSxrFbbfbe8NLqiyKIu1qlCFgKKoQqzx3XZj2O/uXeg1JIGAEhQZzM/TLIkiz52fTaPQZ2iyOT8HABGGjZJka1YrDMEUBBuMijhcQ8eyl4vl6fh0djZz1+7zF+Ojo5OXUy3NqZVhv5ppa98Lo9APfcdxbNuGYZTohrVaGixboZmKpq2ePB3fP3784PjR7I3u+onlePbas2xnaZqW60IAMEY0xoSlWY6p1JWGqjYajbaiNFutHYxpzws8P3C9IE7yEhIIIK7VxFazFXjeydGxY5iopBiACYXXprOcvwZFWeRFlhUlRNtr0PRDimYEUer3epf29xWxxiBEABX7rrlcEAQ5momi+HxTlJgkW8sIYt3zM4REdbtFQYiiEVWhUY2j9wb9i4PdLEuDOIo3hZ8VfL0Ngaj4FIooAHm+JCQvSy/wsjyVFbHdaaVZajjrbTspQUY4qirBZwsj44W5GzyeTDc0afa7vcHulnZ3ZwNK2/f9NDXD5LXjexvwcDyFd09OEgpphvn/zZvj6TSI4wJQCOMoTQzLsteuG0a67WgrQ9MtzbDfAgAA//8tzon9AAAABklEQVQDAAGEaFO3pF62AAAAAElFTkSuQmCC" alt="" width="16" height="16"></span>
-            <span class="brand-copy"><span class="brand-text">卫红易<em>666</em></span><span class="brand-back">回到主页</span></span>
+            <span class="brand-text">卫红易<em>666</em></span>
         </a>
         <nav class="nav-links" aria-label="主导航">
+            <a href="https://harslov.github.io/index.htm">首页</a>
             <a href="start.htm">起始页</a>
             <a href="aboutMe.htm">关于我</a>
             <a href="forum.htm">论坛</a>
