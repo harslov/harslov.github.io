@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh" class="no-js">
-<head>
+<html lang="zh" class="js"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="卫红易,易卫红,CS2,卫红易论坛,卫红易666,平和,Github,股市,财经,股市行情,投资,饰品,游戏,射击游戏,开户,教程,游戏教程,游戏交流,论坛">
@@ -13,7 +11,7 @@
     <meta property="og:title" content="卫红易666-主页">
     <meta property="og:description" content="卫红易666的个人网站">
     <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAC1klEQVR4AQyPuY8bdQCF53fN4bHn9Lm2szbZ1WZFBCISSCkogCZIiAYUKiokSgpQGiMqKGkA8QfQQUmXKk2UKEq0G20SJUq8cbweJ7bn9NwzO+OZWPq69z7pPXjv79Gdv0b/jr779fonv33z2X+j72//Mbr758+3fr/xz0/f/vLVpz9cuzr6+vPR9Ws3vvz4xy+uQgRJnheyrF46OOS4iq7rhmHq+mpy+nI+m9OYHOwfDIfDdrMliXKV5SEmrOuHi4U+mZytbZdlOJ6rgAKkUcKz3BZrpWuTaeB4PMNLggIlWel0dkRRIBjXFXnQ7+0NhzudliTUVFFQBYEGII/jTZLyDNuUVEhjtM1adfXyuwcfXnn/nd2+IolSlW+rcrfZ6NSVw4vDjz5478rlw64qyzwHMSxrFbbfbe8NLqiyKIu1qlCFgKKoQqzx3XZj2O/uXeg1JIGAEhQZzM/TLIkiz52fTaPQZ2iyOT8HABGGjZJka1YrDMEUBBuMijhcQ8eyl4vl6fh0djZz1+7zF+Ojo5OXUy3NqZVhv5ppa98Lo9APfcdxbNuGYZTohrVaGixboZmKpq2ePB3fP3784PjR7I3u+onlePbas2xnaZqW60IAMEY0xoSlWY6p1JWGqjYajbaiNFutHYxpzws8P3C9IE7yEhIIIK7VxFazFXjeydGxY5iopBiACYXXprOcvwZFWeRFlhUlRNtr0PRDimYEUer3epf29xWxxiBEABX7rrlcEAQ5momi+HxTlJgkW8sIYt3zM4REdbtFQYiiEVWhUY2j9wb9i4PdLEuDOIo3hZ8VfL0Ngaj4FIooAHm+JCQvSy/wsjyVFbHdaaVZajjrbTspQUY4qirBZwsj44W5GzyeTDc0afa7vcHulnZ3ZwNK2/f9NDXD5LXjexvwcDyFd09OEgpphvn/zZvj6TSI4wJQCOMoTQzLsteuG0a67WgrQ9MtzbDfAgAA//8tzon9AAAABklEQVQDAAGEaFO3pF62AAAAAElFTkSuQmCC">
-<link rel="preconnect" href="https://i.ibb.co" crossorigin>
+<link rel="preconnect" href="https://i.ibb.co" crossorigin="">
     <script>document.documentElement.classList.remove("no-js");document.documentElement.classList.add("js");</script>
     <style>
 /* ============================================================
@@ -2591,31 +2589,89 @@ body { background: var(--bg); }
 @media (max-width: 380px) {
   .nav-links a { font-size: 11.5px; padding: 8px 5px; white-space: nowrap; }
 }
+
+/* ---------- Minecraft achievement toast, bottom-right ---------- */
+.mc-toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 260;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  max-width: min(360px, calc(100vw - 28px));
+  padding: 11px 16px 11px 11px;
+  border: 3px solid #8a8a8a;
+  border-radius: 2px;
+  background: #1d1d1d;
+  box-shadow: inset 0 0 0 3px #0d0d0d, inset 0 0 0 4px #3f3f3f, 0 10px 0 -4px rgba(0, 0, 0, .25), 0 22px 44px -24px rgba(0, 0, 0, .85);
+  color: #fff;
+  font-family: "Courier New", Consolas, monospace;
+  opacity: 0;
+  transform: translateX(calc(100% + 40px));
+  transition: opacity .35s ease, transform .55s cubic-bezier(.2, .8, .2, 1);
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+.mc-toast.show { opacity: 1; transform: none; }
+.mc-icon {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  object-fit: cover;
+  border: 2px solid #050505;
+  background: #0b160c;
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, .14), inset -2px -2px 0 rgba(0, 0, 0, .5);
+  image-rendering: pixelated;
+}
+.mc-copy { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.mc-kicker {
+  color: #ffd45a;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  line-height: 1.2;
+  text-shadow: 1px 1px 0 #4a3500;
+}
+.mc-copy strong {
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.3;
+  letter-spacing: .02em;
+  text-shadow: 2px 2px 0 #3b3b3b;
+  white-space: nowrap;
+}
+@media (max-width: 520px) {
+  .mc-toast { right: 12px; bottom: 12px; gap: 9px; padding: 8px 12px 8px 8px; }
+  .mc-icon { width: 40px; height: 40px; flex-basis: 40px; }
+  .mc-copy strong { font-size: 13px; }
+}
 </style>
 </head>
-<body class="page-home">
+<body class="page-home has-pointer">
 <a class="skip-link" href="#main">跳到主要内容</a>
-<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true" style="width: 0%;"></div>
 <div class="bg" aria-hidden="true">
     <span class="orb orb-1"></span>
     <span class="orb orb-2"></span>
     <span class="orb orb-3"></span>
 </div>
-<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true" style="transform: translate3d(1050.86px, 10px, 0px);"></div>
 <div class="site">
 
 <header class="site-header">
     <div class="nav-shell">
-        <a class="brand" href="index.htm" aria-label="卫红易666 首页">
+        <a class="brand" href="https://harslov.github.io/index.htm" aria-label="卫红易666 首页">
             <span class="brand-mark" aria-hidden="true"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAC1klEQVR4AQyPuY8bdQCF53fN4bHn9Lm2szbZ1WZFBCISSCkogCZIiAYUKiokSgpQGiMqKGkA8QfQQUmXKk2UKEq0G20SJUq8cbweJ7bn9NwzO+OZWPq69z7pPXjv79Gdv0b/jr779fonv33z2X+j72//Mbr758+3fr/xz0/f/vLVpz9cuzr6+vPR9Ws3vvz4xy+uQgRJnheyrF46OOS4iq7rhmHq+mpy+nI+m9OYHOwfDIfDdrMliXKV5SEmrOuHi4U+mZytbZdlOJ6rgAKkUcKz3BZrpWuTaeB4PMNLggIlWel0dkRRIBjXFXnQ7+0NhzudliTUVFFQBYEGII/jTZLyDNuUVEhjtM1adfXyuwcfXnn/nd2+IolSlW+rcrfZ6NSVw4vDjz5478rlw64qyzwHMSxrFbbfbe8NLqiyKIu1qlCFgKKoQqzx3XZj2O/uXeg1JIGAEhQZzM/TLIkiz52fTaPQZ2iyOT8HABGGjZJka1YrDMEUBBuMijhcQ8eyl4vl6fh0djZz1+7zF+Ojo5OXUy3NqZVhv5ppa98Lo9APfcdxbNuGYZTohrVaGixboZmKpq2ePB3fP3784PjR7I3u+onlePbas2xnaZqW60IAMEY0xoSlWY6p1JWGqjYajbaiNFutHYxpzws8P3C9IE7yEhIIIK7VxFazFXjeydGxY5iopBiACYXXprOcvwZFWeRFlhUlRNtr0PRDimYEUer3epf29xWxxiBEABX7rrlcEAQ5momi+HxTlJgkW8sIYt3zM4REdbtFQYiiEVWhUY2j9wb9i4PdLEuDOIo3hZ8VfL0Ngaj4FIooAHm+JCQvSy/wsjyVFbHdaaVZajjrbTspQUY4qirBZwsj44W5GzyeTDc0afa7vcHulnZ3ZwNK2/f9NDXD5LXjexvwcDyFd09OEgpphvn/zZvj6TSI4wJQCOMoTQzLsteuG0a67WgrQ9MtzbDfAgAA//8tzon9AAAABklEQVQDAAGEaFO3pF62AAAAAElFTkSuQmCC" alt="" width="16" height="16"></span>
             <span class="brand-text">卫红易<em>666</em></span>
         </a>
         <nav class="nav-links" aria-label="主导航">
             <a href="https://harslov.github.io/index.htm">首页</a>
-            <a href="start.htm">起始页</a>
-            <a href="aboutMe.htm">关于我</a>
-            <a href="forum.htm">论坛</a>
-            <a href="cs2.htm">CS2</a>
+            <a href="https://harslov.github.io/start.htm">起始页</a>
+            <a href="https://harslov.github.io/aboutMe.htm">关于我</a>
+            <a href="https://harslov.github.io/forum.htm">论坛</a>
+            <a href="https://harslov.github.io/cs2.htm">CS2</a>
         </nav>
     </div>
 </header>
@@ -2623,44 +2679,44 @@ body { background: var(--bg); }
 <main id="main">
     <section class="hero">
         <div class="container hero-grid">
-            <div class="hero-copy reveal">
+            <div class="hero-copy reveal in">
                 <span class="eyebrow"><span class="dot" aria-hidden="true"></span>HARSLOV.GITHUB.IO · WEIHONGYI 666</span>
                 <h1 class="display">惊天大瓜</h1>
                 <div class="random-name-row">
-                    <h2 class="random-name" aria-live="polite"><a id="randomName" href="https://www.baidu.com" target="_blank" rel="noopener">我是卫红易</a></h2>
+                    <h2 class="random-name" aria-live="polite"><a id="randomName" href="https://www.baidu.com" target="_blank" rel="noopener" class="is-refreshing">我是魏轰译</a></h2>
                     <button class="random-name-btn" id="randomNameBtn" type="button" aria-controls="randomName" aria-label="随机换一个名字">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"></path><path d="M3 21v-5h5"></path><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"></path><path d="M21 3v5h-5"></path></svg>
                         <span>随机名字</span>
                     </button>
                 </div>
                 <h3 class="section-kicker">请大家欣赏我的自拍照：</h3>
             </div>
-            <div class="selfie-stage reveal" style="--d:140ms">
+            <div class="selfie-stage reveal in" style="--d:140ms">
                 <span class="selfie-halo" aria-hidden="true"></span>
-                <figure class="selfie-card" data-tilt>
+                <figure class="selfie-card" data-tilt="">
                     <div class="selfie-media">
                         <a class="selfie-link" href="https://ys.mihoyo.com/" target="_blank" rel="noopener" aria-label="Genshin">
                             <img src="https://i.ibb.co/6cwkc7qb/Genshin.jpg" alt="Genshin" title="Genshin" width="799" height="690" fetchpriority="high" decoding="async">
                         </a>
-                        <button class="zoom-fab" type="button" data-zoom data-full="https://i.ibb.co/6cwkc7qb/Genshin.jpg" data-caption="Genshin" aria-label="放大查看 Genshin">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2M11 8v6M8 11h6"/></svg>
+                        <button class="zoom-fab" type="button" data-zoom="" data-full="https://i.ibb.co/6cwkc7qb/Genshin.jpg" data-caption="Genshin" aria-label="放大查看 Genshin">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2M11 8v6M8 11h6"></path></svg>
                         </button>
                         <span class="scan" aria-hidden="true"></span>
                     </div>
                 </figure>
             </div>
         </div>
-        <div class="start-row reveal">
-            <a class="start-btn" href="start.htm">进入起始页</a>
+        <div class="start-row reveal in">
+            <a class="start-btn" href="https://harslov.github.io/start.htm">进入起始页</a>
         </div>
     </section>
 
     <section class="container quote-wrap">
-        <div class="quote-card reveal">
+        <div class="quote-card reveal in">
             <div class="quote-label">FAMOUS QUOTE · 至理名言</div>
-            <p class="quote-text"><span id="quoteText">得了便宜还卖乖</span><span class="caret" aria-hidden="true"></span></p>
+            <p class="quote-text"><span id="quoteText">今天1.5rating又没带动</span><span class="caret" aria-hidden="true"></span></p>
             <div class="quote-meta">
-                <span id="quoteAuthor">——卫红易</span>
+                <span id="quoteAuthor">——魏轰译</span>
                 <button class="ghost-btn" id="shuffleQuote" type="button">换一句 <span aria-hidden="true">↻</span></button>
             </div>
         </div>
@@ -2672,10 +2728,10 @@ body { background: var(--bg); }
     <div class="footer-inner">
         <div class="footer-brand">卫红易666 · HARSLOV.GITHUB.IO</div>
         <nav class="footer-nav" aria-label="页脚导航">
-            <a href="index.htm">首页</a>
-            <a href="aboutMe.htm">关于我</a>
-            <a href="forum.htm">论坛</a>
-            <a href="cs2.htm">CS2</a>
+            <a href="https://harslov.github.io/index.htm">首页</a>
+            <a href="https://harslov.github.io/aboutMe.htm">关于我</a>
+            <a href="https://harslov.github.io/forum.htm">论坛</a>
+            <a href="https://harslov.github.io/cs2.htm">CS2</a>
         </nav>
         <p class="copy">© 2025 卫红易666 | None Rights Reserved</p>
     </div>
@@ -2683,12 +2739,12 @@ body { background: var(--bg); }
 </div>
 
 <button class="to-top" id="toTop" type="button" aria-label="回到顶部">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"></path><path d="m5 12 7-7 7 7"></path></svg>
 </button>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图片预览" aria-hidden="true">
     <button class="lb-close" id="lightboxClose" type="button" aria-label="关闭图片预览">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
     </button>
     <figure>
         <img id="lightboxImg" alt="">
@@ -2696,7 +2752,15 @@ body { background: var(--bg); }
     </figure>
 </div>
 
-<a class="hidden-box" href="superidol.htm" aria-hidden="true" tabindex="-1"></a>
+<a class="hidden-box" href="https://harslov.github.io/superidol.htm" aria-hidden="true" tabindex="-1"></a>
+
+<div class="mc-toast" id="mcToast" role="status" aria-live="polite">
+    <img class="mc-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAC1klEQVR4AQyPuY8bdQCF53fN4bHn9Lm2szbZ1WZFBCISSCkogCZIiAYUKiokSgpQGiMqKGkA8QfQQUmXKk2UKEq0G20SJUq8cbweJ7bn9NwzO+OZWPq69z7pPXjv79Gdv0b/jr779fonv33z2X+j72//Mbr758+3fr/xz0/f/vLVpz9cuzr6+vPR9Ws3vvz4xy+uQgRJnheyrF46OOS4iq7rhmHq+mpy+nI+m9OYHOwfDIfDdrMliXKV5SEmrOuHi4U+mZytbZdlOJ6rgAKkUcKz3BZrpWuTaeB4PMNLggIlWel0dkRRIBjXFXnQ7+0NhzudliTUVFFQBYEGII/jTZLyDNuUVEhjtM1adfXyuwcfXnn/nd2+IolSlW+rcrfZ6NSVw4vDjz5478rlw64qyzwHMSxrFbbfbe8NLqiyKIu1qlCFgKKoQqzx3XZj2O/uXeg1JIGAEhQZzM/TLIkiz52fTaPQZ2iyOT8HABGGjZJka1YrDMEUBBuMijhcQ8eyl4vl6fh0djZz1+7zF+Ojo5OXUy3NqZVhv5ppa98Lo9APfcdxbNuGYZTohrVaGixboZmKpq2ePB3fP3784PjR7I3u+onlePbas2xnaZqW60IAMEY0xoSlWY6p1JWGqjYajbaiNFutHYxpzws8P3C9IE7yEhIIIK7VxFazFXjeydGxY5iopBiACYXXprOcvwZFWeRFlhUlRNtr0PRDimYEUer3epf29xWxxiBEABX7rrlcEAQ5momi+HxTlJgkW8sIYt3zM4REdbtFQYiiEVWhUY2j9wb9i4PdLEuDOIo3hZ8VfL0Ngaj4FIooAHm+JCQvSy/wsjyVFbHdaaVZajjrbTspQUY4qirBZwsj44W5GzyeTDc0afa7vcHulnZ3ZwNK2/f9NDXD5LXjexvwcDyFd09OEgpphvn/zZvj6TSI4wJQCOMoTQzLsteuG0a67WgrQ9MtzbDfAgAA//8tzon9AAAABklEQVQDAAGEaFO3pF62AAAAAElFTkSuQmCC" alt="" width="16" height="16">
+    <div class="mc-copy">
+        <span class="mc-kicker">成就达成！</span>
+        <strong>William666!</strong>
+    </div>
+</div>
 
 
 <script>
@@ -2972,5 +3036,153 @@ body { background: var(--bg); }
 })();
 
 </script>
-</body>
-</html>
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- keyboard easter egg: type "william" ---------- */
+  var SECRET = 'william';
+  var typed = '';
+  var toast = document.getElementById('mcToast');
+  var toastTimer = 0;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function showToast() {
+    if (!toast) { return; }
+    window.clearTimeout(toastTimer);
+    toast.classList.remove('show');
+    void toast.offsetWidth;
+    toast.classList.add('show');
+    toastTimer = window.setTimeout(function () {
+      toast.classList.remove('show');
+    }, 10500);
+  }
+
+  var canvas = null;
+  var rafId = 0;
+  var resizeHandler = null;
+
+  function stopConfetti() {
+    if (rafId) { window.cancelAnimationFrame(rafId); rafId = 0; }
+    if (canvas) { canvas.remove(); canvas = null; }
+    if (resizeHandler) {
+      window.removeEventListener('resize', resizeHandler);
+      resizeHandler = null;
+    }
+  }
+
+  function fireConfetti() {
+    if (reduceMotion) { return; }
+    stopConfetti();
+
+    canvas = document.createElement('canvas');
+    canvas.setAttribute('aria-hidden', 'true');
+    canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:240;';
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    if (!ctx) { canvas.remove(); canvas = null; return; }
+
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = 0;
+    var h = 0;
+    resizeHandler = function () {
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resizeHandler();
+
+    var colors = ['#C0CD32', '#B3CD32', '#A6CD32', '#99CD32', '#8CCD32', '#80CD32', '#73CD32', '#FFD45A', '#FFFFFF'];
+    var count = w < 600 ? 95 : 165;
+    var pieces = [];
+    for (var i = 0; i < count; i += 1) {
+      pieces.push({
+        x: Math.random() * w,
+        y: -20 - Math.random() * h * 0.5,
+        vx: (Math.random() - 0.5) * 1.8,
+        vy: 1.6 + Math.random() * 2.6,
+        w: 4 + Math.random() * 5,
+        h: 7 + Math.random() * 7,
+        rot: Math.random() * Math.PI * 2,
+        vr: (Math.random() - 0.5) * 0.22,
+        sway: Math.random() * Math.PI * 2,
+        swaySpeed: 0.012 + Math.random() * 0.022,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      });
+    }
+
+    var start = performance.now();
+    function frame(now) {
+      if (!canvas) { return; }
+      var elapsed = now - start;
+      ctx.clearRect(0, 0, w, h);
+      for (var j = 0; j < pieces.length; j += 1) {
+        var p = pieces[j];
+        p.vy += 0.035;
+        p.x += p.vx + Math.sin(p.sway) * 0.35;
+        p.y += p.vy;
+        p.sway += p.swaySpeed;
+        p.rot += p.vr;
+        if (p.y > h + 30) {
+          if (elapsed < 4200) {
+            p.x = Math.random() * w;
+            p.y = -20 - Math.random() * 80;
+            p.vy = 1.4 + Math.random() * 2.4;
+          } else {
+            continue;
+          }
+        }
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.globalAlpha = elapsed > 5600 ? Math.max(0, 1 - (elapsed - 5600) / 900) : 1;
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+      }
+      if (elapsed < 7000) {
+        rafId = window.requestAnimationFrame(frame);
+      } else {
+        stopConfetti();
+      }
+    }
+    rafId = window.requestAnimationFrame(frame);
+    window.addEventListener('resize', resizeHandler);
+  }
+
+  function isTypingTarget(el) {
+    if (!el) { return false; }
+    if (el.isContentEditable) { return true; }
+    var tag = (el.tagName || '').toUpperCase();
+    return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
+  }
+
+  document.addEventListener('keydown', function (event) {
+    if (event.defaultPrevented || event.isComposing || event.repeat) { return; }
+    if (event.ctrlKey || event.metaKey || event.altKey) { return; }
+    if (isTypingTarget(event.target)) { return; }
+
+    var key = event.key;
+    if (!key || key.length !== 1) { return; }
+    key = key.toLowerCase();
+
+    if (key === SECRET.charAt(typed.length)) {
+      typed += key;
+    } else {
+      typed = key === SECRET.charAt(0) ? key : '';
+    }
+
+    if (typed === SECRET) {
+      typed = '';
+      showToast();
+      fireConfetti();
+    }
+  });
+})();
+
+</script>
+
+
+</body></html>
